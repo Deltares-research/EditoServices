@@ -1,0 +1,228 @@
+#PACIFIC OYSTER
+
+input-data:
+  - dataset:
+      filename: 'input_file' #input water quality & hydrodynamic data from model
+      variable_mapping:
+        Water_depth: 'Water_Depth' #meters
+        salinity: 'Salinity' #salinity concentration in PSU
+        OXY: 'Dissolved_Oxygen' #dissolved oxygen in g/L
+        Chfla: 'Chlorophyll_Concentration' #chlorophyll concentration in g/ L 
+        Inorganic_matter: 'Inorganic_Matter_Concentration' #mg/L
+        Temperature: 'Temperature' #deg C
+        Flow_velocity: 'Flow_Velocity' #m/s 
+
+
+rules:
+
+  - layer_filter_rule:
+      name: select layer
+      description: select layer at which measurement is done
+      layer_number: 31 
+      input_variable: Chlorophyll_Concentration
+      output_variable: Chlorophyll_Concentration_2D
+
+  - time_aggregation_rule:
+      name: Time average year
+      description: Get the mean value in a year
+      operation: AVERAGE
+      time_scale: year
+      input_variable: Chlorophyll_Concentration_2D 
+      output_variable: Chlorophyll_Concentration_2D_avg
+
+  - response_curve_rule:
+      name: HSI Chlorophyll_Concentration
+      description: Mapping to HSI
+      input_values: [-10, 0, 12, 50, 55]
+      output_values: [0, 0, 1, 1, 0]
+      input_variable: Chlorophyll_Concentration_2D_avg
+      output_variable: HSI_Chlorophyll_Concentration 
+
+  - layer_filter_rule:
+      name: select layer
+      description: select  layer at which measurement is done
+      layer_number: 31 
+      input_variable: Inorganic_Matter_Concentration
+      output_variable: Inorganic_Matter_Concentration_2D
+
+  - time_aggregation_rule:
+      name: Time average year
+      description: Get the mean value in a year
+      operation: AVERAGE
+      time_scale: year
+      input_variable: Inorganic_Matter_Concentration_2D
+      output_variable: Inorganic_Matter_Concentration_2D_avg
+
+  - response_curve_rule:
+      name: HSI Inorganic_Matter_Concentration
+      description: Mapping to HSI
+      input_values: [0, 10, 50, 200]
+      output_values: [1, 1, 0.1, 0]
+      input_variable: Inorganic_Matter_Concentration_2D_avg
+      output_variable: HSI_Inorganic_Matter_Concentration
+
+  - layer_filter_rule:
+      name: select layer
+      description: select  layer at which measurement is done
+      layer_number: 31 
+      input_variable: Temperature
+      output_variable: Temperature_2D 
+
+  - time_aggregation_rule:
+      name: Time average year
+      description: Get the mean value in a year
+      operation: AVERAGE
+      time_scale: year
+      input_variable: Temperature_2D
+      output_variable: Temperature_2D_avg
+
+  - response_curve_rule:
+      name: HSI Temperature
+      description: Mapping  to HGI 
+      input_values: [-10, 8, 15, 18, 34, 45]
+      output_values: [0, 0,1, 1, 0, 0]
+      input_variable: Temperature_2D_avg
+      output_variable: HSI_Temperature
+
+  - layer_filter_rule:
+      name: select layer
+      description: select layer at which measurement is done
+      layer_number: 31 
+      input_variable: Flow_Velocity
+      output_variable: Flow_Velocity_2D
+
+  - time_aggregation_rule:
+      name: Time average year
+      description: Get the mean value in a year
+      operation: AVERAGE
+      time_scale: year
+      input_variable: Flow_Velocity_2D
+      output_variable: Flow_Velocity_2D_avg
+
+  - response_curve_rule:
+      name: HSI Flow_Velocity
+      description: Mapping to HSI 
+      input_values: [0, 0.4, 0.45, 0.5, 1]
+      output_values: [1, 1, 0.1, 0, 0]
+      input_variable: Flow_Velocity_2D_avg
+      output_variable: HSI_Flow_Velocity
+
+  - layer_filter_rule:
+      name: select layer
+      description: select layer at which measurement is done
+      layer_number: 31 
+      input_variable: Salinity
+      output_variable: Salinity_2D
+
+  - time_aggregation_rule:
+      name: Time average salinity year
+      description: Get the mean salinity in a year
+      operation: AVERAGE
+      time_scale: year
+      input_variable: Salinity_2D
+      output_variable: Salinity_2D_avg 
+
+  - formula_rule:
+      name: Salinity to Chloride
+      description: Converts salinity (psu) to chloride (CL- g/l) for fresh water environments
+      formula: Salinity_2D_avg /0.0018066/1000 
+      input_variables: [Salinity_2D_avg]
+      output_variable: Chloride_2D_avg 
+      
+  - response_curve_rule:
+      name: HSI Chloride_Concentration
+      description: Mapping HSI 
+      input_values: [0, 5.5, 11, 13.8, 15, 25]
+      output_values: [0, 0, 0.58, 0.92, 1, 1]
+      input_variable: Chloride_2D_avg 
+      output_variable: HSI_Chloride_Concentration 
+
+  - layer_filter_rule:
+      name: select layer
+      description: select  layer at which measurement is done
+      layer_number: 31 
+      input_variable: Dissolved_Oxygen
+      output_variable: Dissolved_Oxygen_2D
+
+  - time_aggregation_rule:
+      name: Time average oxygen level year
+      description: Get the mean oxygen level in a year
+      operation: AVERAGE
+      time_scale: year
+      input_variable: Dissolved_Oxygen_2D
+      output_variable: Dissolved_Oxygen_2D_avg 
+
+  - response_curve_rule:
+      name: HSI Dissolved_Oxygen
+      description: Mapping HSI 
+      input_values: [0, 5, 7, 15]
+      output_values: [0, 0, 1, 1]
+      input_variable: Dissolved_Oxygen_2D_avg 
+      output_variable: HSI_Dissolved_Oxygen
+
+  - time_aggregation_rule:
+      name: Time average water depth year
+      description: Get the mean water depth in a year
+      operation: AVERAGE
+      time_scale: year
+      input_variable: Water_Depth
+      output_variable: Water_Depth_avg 
+
+  - response_curve_rule:
+      name: HSI Water_Depth
+      description: Mapping to HSI
+      input_values: [0, 2, 5, 10, 25, 50, 70]
+      output_values: [0.8, 1, 0.6, 0.3, 0.1, 0, 0]
+      input_variable: Water_Depth_avg
+      output_variable: HSI_Water_Depth
+
+  - formula_rule:
+      name: Inundation time rule
+      description: amount of time grid is inundated #threshold: 1m
+      formula: > 
+        0 if(depth<1) else 100 
+      input_variables: [Water_Depth]
+      output_variable: Inundation_State
+
+  - time_aggregation_rule:
+      name: Time average inundation state year
+      description: Get the inundation time
+      operation: AVERAGE
+      time_scale: year
+      input_variable: Inundation_State
+      output_variable: Inundation_Time #0 always dry and 100 always inundated
+
+  - response_curve_rule:
+      name: HSI Inundation_Time
+      description: Mapping to HSI 
+      input_values: [0, 0.3, 0.4, 0.7, 0.75, 1]
+      output_values: [0, 0, 0.11, 0.75, 0.95, 1]
+      input_variable: Inundation_Time
+      output_variable: HSI_Inundation_Time
+
+  - formula_rule:
+      name: total probability
+      description: combination of HSI parameters #HSI from 0-1 following GEOMETRIC MEAN
+      formula: >  
+        100*((HSI_Flow_Velocity*HSI_Chlorophyll_Concentration*HSI_Temperature*HSI_Inorganic_Matter_Concentration*HSI_Chloride_Concentration *HSI_Dissolved_Oxygen*HSI_Water_Depth*HSI_Inundation_Time*0.01)**0.125) #*100 for percentage
+      input_variables: [HSI_Flow_Velocity, HSI_Chlorophyll_Concentration, HSI_Temperature, HSI_Inorganic_Matter_Concentration, HSI_Chloride_Concentration, HSI_Dissolved_Oxygen, HSI_Water_Depth, HSI_Inundation_Time]
+      output_variable: Total_HSI
+ 
+  - step_function_rule:
+      name: HSI classes
+      description: Transforming HSI results into classes
+      limit_response_table:    
+            - [ limit , response]
+            - [-999.0 ,     0.00]
+            - [   0.0 ,     1.00]
+            - [  25.0 ,    2.00]
+            - [  50.0 ,    3.00]
+            - [  75.0 ,    4.00]
+            - [ 999.0 ,     0.00]
+      input_variable: Total_HSI
+      output_variable: HSI_Classes
+
+output-data:
+  filename: 'output_file' #location of output file
+
+  
