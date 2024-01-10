@@ -5,3 +5,4 @@ pip install s3fs
 
 # get run script
 wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact/main.py
+wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact/main.ipynb
