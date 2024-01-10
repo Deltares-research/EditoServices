@@ -11,3 +11,4 @@ wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_ec
 wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_yaml_create/ProNotebook.py .
 wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_yaml_create/Mussel.yaml .
 wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_yaml_create/PacificOyster.yaml .
+wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_yaml_create/RunNotebook.ipynb .
