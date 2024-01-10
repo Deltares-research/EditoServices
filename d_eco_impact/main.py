@@ -15,7 +15,7 @@ bucket_name = f"oidc-{onxia_user_name}"
 S3_ENDPOINT_URL = os.environ["S3_ENDPOINT"]
 fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': S3_ENDPOINT_URL})
 
-yaml_file = "test.yaml"
+yaml_file = "input_file.yaml"
 
 # download the yaml file
 fs.download(f"{bucket_name}/{yaml_file}", yaml_file)
