@@ -1,7 +1,13 @@
 
-# pip install d-ecoimpact
-pip install git+https://github.com/Deltares/D-ecoimpact
-pip install s3fs
+# pip install libraries
+pip install numpy
+pip install ipywidgets
+pip install matplotlib
+pip install ipython
+pip install yaml
 
-# get run script
-wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/main.py
+# get scripts
+wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_yaml_create/BasicNotebook.py .
+wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_yaml_create/ProNotebook.py .
+wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_yaml_create/Mussel.yaml .
+wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_yaml_create/PacificOyster.yaml .
