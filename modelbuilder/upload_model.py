@@ -19,6 +19,13 @@ dir_data = os.path.join(dir_model, "data")
 if os.path.exists(dir_data):
     shutil.rmtree(dir_data)
 
+# temporarily add run_docker.sh (maybe move to fm-run-workflow)
+file_docker = os.path.join(dir_model,"run_docker.sh")
+with open(file_docker, "w") as f:
+    f.write("#!/bin/bash")
+    f.write("ulimit -s unlimited")
+    f.write("/opt/delft3dfm_latest/lnx64/bin/run_dimr.sh -c 1 --dockerparallel --D3D_HOME /opt/delft3dfm_latest/lnx64")
+
 # setup s3 bucket
 S3_ENDPOINT_URL = os.environ["S3_ENDPOINT"]
 fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': S3_ENDPOINT_URL})
