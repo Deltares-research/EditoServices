@@ -1,0 +1,16 @@
+version: 0.0.0
+
+input-data:
+  - dataset:
+      filename: FlowFM_net.nc
+
+rules:
+  - multiply_rule:
+      name: test name
+      description: Converts salinity to chloride
+      multipliers: [0.0018066, 1e5]
+      input_variable: mesh2d_face_x_bnd
+      output_variable: chloride
+
+output-data:
+  filename: results.nc
