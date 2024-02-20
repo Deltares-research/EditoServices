@@ -1,5 +1,7 @@
 FROM ghcr.io/deltares/decoimpact:latest
 
+LABEL org.opencontainers.image.source="https://github.com/Deltares/D-EcoImpact"
+
 ENV APP_HOME /app
 
 WORKDIR $APP_HOME
