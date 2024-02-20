@@ -9,12 +9,11 @@ from decoimpact.crosscutting.logger_factory import LoggerFactory
 from decoimpact.data.entities.data_access_layer import DataAccessLayer, IDataAccessLayer
 
 # Create an file-system object for the s3 bucket
-onxia_user_name = os.environ["GIT_USER_NAME"]
-bucket_name = f"oidc-{onxia_user_name}"
-S3_ENDPOINT_URL = os.environ["S3_ENDPOINT"]
+bucket_name = os.environ["BUCKET_NAME"]
+S3_ENDPOINT_URL = os.environ["AWS_S3_ENDPOINT"]
 fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': S3_ENDPOINT_URL})
 
-yaml_file = os.environ["yaml-file-path"]
+yaml_file = os.environ["YAML_FILE_PATH"]
 yaml_file_path = Path(yaml_file)
 
 
