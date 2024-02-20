@@ -1,1 +1,0 @@
-Result of processing YAML and NetCDF
