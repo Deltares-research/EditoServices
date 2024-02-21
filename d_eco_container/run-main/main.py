@@ -14,7 +14,7 @@ from decoimpact.data.entities.data_access_layer import DataAccessLayer, IDataAcc
 # | replace 'user-' 'oidc-'
 USER_NAME = os.environ["USER_NAME"]
 bucket_name = USER_NAME.replace("user-", "oidc-")
-S3_ENDPOINT_URL = os.environ["AWS_S3_ENDPOINT"]
+S3_ENDPOINT_URL = f"https://{os.environ['AWS_S3_ENDPOINT']}"
 AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
 AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
 AWS_SESSION_TOKEN = os.environ["AWS_SESSION_TOKEN"]
@@ -25,6 +25,7 @@ fs = s3fs.S3FileSystem(
     secret=AWS_SECRET_ACCESS_KEY,
     token=AWS_SESSION_TOKEN
 )
+fs.ls(bucket_name)
 
 yaml_file = os.environ["YAML_FILE_PATH"]
 yaml_file_path = Path(yaml_file)
