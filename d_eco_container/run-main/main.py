@@ -1,6 +1,7 @@
 import os
-import s3fs
 from pathlib import Path
+
+import s3fs
 
 from decoimpact.business.application import Application
 from decoimpact.business.workflow.model_builder import ModelBuilder
@@ -8,14 +9,25 @@ from decoimpact.crosscutting.i_logger import ILogger
 from decoimpact.crosscutting.logger_factory import LoggerFactory
 from decoimpact.data.entities.data_access_layer import DataAccessLayer, IDataAccessLayer
 
+
 # Create an file-system object for the s3 bucket
-bucket_name = os.environ["BUCKET_NAME"]
+# | replace 'user-' 'oidc-'
+USER_NAME = os.environ["USER_NAME"]
+bucket_name = USER_NAME.replace("user-", "oidc-")
 S3_ENDPOINT_URL = os.environ["AWS_S3_ENDPOINT"]
-fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': S3_ENDPOINT_URL})
+AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
+AWS_SESSION_TOKEN = os.environ["AWS_SESSION_TOKEN"]
+
+fs = s3fs.S3FileSystem(
+    client_kwargs={'endpoint_url': S3_ENDPOINT_URL},
+    key=AWS_ACCESS_KEY_ID,
+    secret=AWS_SECRET_ACCESS_KEY,
+    token=AWS_SESSION_TOKEN
+)
 
 yaml_file = os.environ["YAML_FILE_PATH"]
 yaml_file_path = Path(yaml_file)
-
 
 # download the yaml file
 fs.download(f"{bucket_name}/{yaml_file}", yaml_file)
