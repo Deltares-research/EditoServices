@@ -2,7 +2,6 @@ import os
 import shutil
 import s3fs
 import argparse
-import shutil
 
 # argument parser
 parser = argparse.ArgumentParser(
