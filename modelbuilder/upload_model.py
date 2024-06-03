@@ -1,26 +1,34 @@
 import os
-#import zipfile
 import shutil
 import s3fs
+import argparse
+import shutil
 
-# zip model input files
-dir_model = "Vietnam_model"
-#file_zip = f"{dir_model}.zip"
-#with zipfile.ZipFile(file_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
-#    for dirname, subdirs, files in os.walk(dir_model):
-#        if "/data" in dirname:
-#            continue
-#        zipf.write(dirname)
-#        for filename in files:
-#            zipf.write(os.path.join(dirname, filename))
+# argument parser
+parser = argparse.ArgumentParser(
+                    prog='s3-bucket-upload',
+                    description='copies the contents of `dir_model` to the folder `delft3dfm_model` on the users s3-bucket')
+parser.add_argument('dir_model') # positional argument
+args = parser.parse_args()
 
-# clean dir_model before upload
-dir_data = os.path.join(dir_model, "data")
+# directory with model input files
+dir_model = args.dir_model
+if not os.path.exists(dir_model):
+    raise FileNotFoundError(f"the folder {dir_model} does not exists, supply a different one")
+
+# copy model input files to new folder (exclude data folder)
+dir_model_temp = dir_model + '_TEMP'
+if os.path.exists(dir_model_temp):
+    shutil.rmtree(dir_model_temp)
+shutil.copytree(dir_model, dir_model_temp)
+
+# remove data dir from dir_model_temp
+dir_data = os.path.join(dir_model_temp, "data")
 if os.path.exists(dir_data):
     shutil.rmtree(dir_data)
 
 # temporarily add run_docker.sh (maybe move to fm-run-workflow)
-file_docker = os.path.join(dir_model,"run_docker.sh")
+file_docker = os.path.join(dir_model_temp,"run_docker.sh")
 with open(file_docker, "w") as f:
     f.write("#!/bin/bash\n")
     f.write("ulimit -s unlimited\n")
@@ -30,7 +38,7 @@ with open(file_docker, "w") as f:
 # TODO: this code does not parse nproc from dimr_config.xml properly yet: https://github.com/Deltares/HYDROLIB-core/issues/562
 #import dfm_tools as dfmt
 #from hydrolib.core.dimr.models import DIMR
-#dimr_file = os.path.join(dir_model, "dimr_config.xml")
+#dimr_file = os.path.join(dir_model_temp, "dimr_config.xml")
 #dimr_model = DIMR(dimr_file)
 #dfmt.modelbuilder.generate_docker_file(dimr_model)
 
@@ -46,5 +54,7 @@ if fs.exists(dir_model_s3):
     print(f"overwriting existing '{dir_model}' folder on s3")
     fs.rm(dir_model_s3, recursive=True)
 
-#fs.upload(file_zip, f'{bucket_name}/{file_zip}')
-fs.upload(dir_model, f'{bucket_name}/{dir_model}', recursive=True)
+fs.upload(dir_model_temp, dir_model_s3, recursive=True)
+
+# removing local temporary model dir
+shutil.rmtree(dir_model_temp)
