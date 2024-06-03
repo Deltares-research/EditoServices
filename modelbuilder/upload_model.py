@@ -11,7 +11,8 @@ parser.add_argument('dir_model') # positional argument
 args = parser.parse_args()
 
 # directory with model input files
-dir_model = args.dir_model
+dir_model = os.path.dirname(args.dir_model)
+assert os.path.isdir(dir_model)
 if not os.path.exists(dir_model):
     raise FileNotFoundError(f"the folder {dir_model} does not exists, supply a different one")
 
