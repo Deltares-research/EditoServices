@@ -12,9 +12,9 @@ args = parser.parse_args()
 
 # directory with model input files
 dir_model = os.path.dirname(args.dir_model)
-assert os.path.isdir(dir_model)
 if not os.path.exists(dir_model):
     raise FileNotFoundError(f"the folder {dir_model} does not exists, supply a different one")
+assert os.path.isdir(dir_model)
 
 # copy model input files to new folder (exclude data folder)
 dir_model_temp = dir_model + '_TEMP'
