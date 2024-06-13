@@ -39,7 +39,6 @@ dict_2_code = {
     "# upload the generated model to you s3 bucket\n",
     "from upload_model import upload_model_to_s3_bucket\n",
     "upload_model_to_s3_bucket(dir_output)\n"
-    "\n"
    ]
   }
 
