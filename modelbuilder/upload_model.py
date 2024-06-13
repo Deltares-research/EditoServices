@@ -2,11 +2,7 @@ import os
 import shutil
 import s3fs
 
-
 def upload_model_to_s3_bucket(dir_model):
-    # remove any trailing slash
-    dir_model = os.path.dirname(dir_model)
-
     # directory with model input files
     if not os.path.exists(dir_model):
         raise FileNotFoundError(f"the folder {dir_model} does not exists, supply a different one")
@@ -24,6 +20,7 @@ def upload_model_to_s3_bucket(dir_model):
         shutil.rmtree(dir_data)
 
     # temporarily add run_docker.sh (maybe move to fm-run-workflow)
+    print("adding run_docker.sh to copy of model folder")
     file_docker = os.path.join(dir_model_temp,"run_docker.sh")
     with open(file_docker, "w") as f:
         f.write("#!/bin/bash\n")
@@ -45,9 +42,10 @@ def upload_model_to_s3_bucket(dir_model):
     bucket_name = f"oidc-{onxia_user_name}"
 
     # remove dir_model_s3 folder if present, to prevent nested dir_model in dir_model
-    dir_model_s3 = f'{bucket_name}/{dir_model}'
+    dir_model_s3 = f'{bucket_name}/{os.path.basename(dir_model)}'
+    print(f"uploading '{dir_model}' to '{dir_model_s3}'")
     if fs.exists(dir_model_s3):
-        print(f"overwriting existing '{dir_model}' folder on s3")
+        print(f"overwriting existing '{dir_model_s3}' folder on s3")
         fs.rm(dir_model_s3, recursive=True)
 
     fs.upload(dir_model_temp, dir_model_s3, recursive=True)
