@@ -52,5 +52,5 @@ def upload_model_to_s3_bucket(dir_model):
 
     # removing local temporary model dir
     shutil.rmtree(dir_model_temp)
-    print(f"upload finished")
+    print("upload finished")
     
