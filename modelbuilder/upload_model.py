@@ -8,17 +8,6 @@ def upload_model_to_s3_bucket(dir_model):
         raise FileNotFoundError(f"the folder {dir_model} does not exists, supply a different one")
     assert os.path.isdir(dir_model)
 
-    # copy model input files to new folder (exclude data folder)
-    dir_model_temp = dir_model + '_TEMP'
-    if os.path.exists(dir_model_temp):
-        shutil.rmtree(dir_model_temp)
-    shutil.copytree(dir_model, dir_model_temp)
-
-    # remove data dir from dir_model_temp
-    dir_data = os.path.join(dir_model_temp, "data")
-    if os.path.exists(dir_data):
-        shutil.rmtree(dir_data)
-
     # setup s3 bucket
     S3_ENDPOINT_URL = os.environ["S3_ENDPOINT"]
     fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': S3_ENDPOINT_URL})
@@ -27,14 +16,16 @@ def upload_model_to_s3_bucket(dir_model):
 
     # remove dir_model_s3 folder if present, to prevent nested dir_model in dir_model
     dir_model_s3 = f'{bucket_name}/{os.path.basename(dir_model)}'
-    print(f"uploading '{dir_model}' to '{dir_model_s3}'")
     if fs.exists(dir_model_s3):
-        print(f"overwriting existing '{dir_model_s3}' folder on s3")
+        print(f"removing existing folder '{dir_model_s3}' on s3")
         fs.rm(dir_model_s3, recursive=True)
-
-    fs.upload(dir_model_temp, dir_model_s3, recursive=True)
-
-    # removing local temporary model dir
-    shutil.rmtree(dir_model_temp)
-    print("upload finished")
     
+    # upload all files in model directory
+    list_files = [x for x in os.listdir(dir_model) if os.path.isfile(os.path.join(dir_model,x))]
+    list_files.sort()
+    print(f"uploading files from '{dir_model}' to '{dir_model_s3}':")
+    for model_file in list_files:
+        model_file_full = os.path.join(dir_model, model_file)
+        print(f" - {model_file}")
+        fs.upload(model_file_full, os.path.join(dir_model_s3,model_file))
+    print("upload finished.")
