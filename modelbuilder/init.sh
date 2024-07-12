@@ -3,7 +3,8 @@
 # kill process if anything fails
 set -e
 
-pip install dfm_tools
+# we require dfm_tools>=0.24.0 since it supports multiple polylines per polyfile
+pip install "dfm_tools>=0.24.0"
 pip install git+https://github.com/deltares/dfm_tools
 wget https://github.com/Deltares/dfm_tools/raw/main/docs/notebooks/modelbuilder_example.ipynb
 #wget https://github.com/Deltares/dfm_tools/raw/main/docs/notebooks/postprocessing_example.ipynb
