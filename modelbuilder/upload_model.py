@@ -19,22 +19,6 @@ def upload_model_to_s3_bucket(dir_model):
     if os.path.exists(dir_data):
         shutil.rmtree(dir_data)
 
-    # temporarily add run_docker.sh (maybe move to fm-run-workflow)
-    print("adding run_docker.sh to copy of model folder")
-    file_docker = os.path.join(dir_model_temp,"run_docker.sh")
-    with open(file_docker, "w") as f:
-        f.write("#!/bin/bash\n")
-        f.write("ulimit -s unlimited\n")
-        f.write("/opt/delft3dfm_latest/lnx64/bin/run_dimr.sh -c 1 --dockerparallel --D3D_HOME /opt/delft3dfm_latest/lnx64\n")
-
-    # add run_docker.sh (mdu_file and nproc are derived form dimr_config.xml)
-    # TODO: this code does not parse nproc from dimr_config.xml properly yet: https://github.com/Deltares/HYDROLIB-core/issues/562
-    #import dfm_tools as dfmt
-    #from hydrolib.core.dimr.models import DIMR
-    #dimr_file = os.path.join(dir_model_temp, "dimr_config.xml")
-    #dimr_model = DIMR(dimr_file)
-    #dfmt.modelbuilder.generate_docker_file(dimr_model)
-
     # setup s3 bucket
     S3_ENDPOINT_URL = os.environ["S3_ENDPOINT"]
     fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': S3_ENDPOINT_URL})

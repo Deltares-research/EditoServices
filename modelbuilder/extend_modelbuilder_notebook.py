@@ -19,18 +19,69 @@ file_ipynb = "modelbuilder_example.ipynb"
 with open(file_ipynb) as f:
     ipynb_json = json.load(f)
 
-# exec_count_last = max([cell["execution_count"] for cell in ipynb_json["cells"] if cell["cell_type"]=="code"]) +1
-
-dict_1_header = {
+edito_header = {
    "cell_type": "markdown",
    # "id": "cf77ed64",
    "metadata": {},
    "source": [
-    "## Upload to s3 bucket (available on EDITO Datalab only)"
+    "## Extra cells added for EDITO platform"
    ]
   }
 
-dict_2_code = {
+mdu_header = {
+   "cell_type": "markdown",
+   # "id": "cf77ed64",
+   "metadata": {},
+   "source": [
+    "### Correct an incorrect mdu default"
+   ]
+  }
+
+mdu_code = {
+   "cell_type": "code",
+   # "execution_count": 19,
+   # "id": "25bcaec2",
+   "metadata": {},
+   "source": [
+    "# replace stretchtype in mdu to support old FM version in docker container until https://github.com/Deltares/HYDROLIB-core/issues/691 is fixed\n",
+    "mdu.geometry.stretchtype = 0\n",
+    "mdu.save(mdu_file) # ,path_style=path_style)\n",
+    "dfmt.make_paths_relative(mdu_file)\n"
+   ]
+  }
+
+docker_header = {
+   "cell_type": "markdown",
+   # "id": "cf77ed64",
+   "metadata": {},
+   "source": [
+    "### Rewrite dimr_config.xml and add run_docker.sh (to run on EDITO Datalab)"
+   ]
+  }
+
+docker_code = {
+   "cell_type": "code",
+   # "execution_count": 19,
+   # "id": "25bcaec2",
+   "metadata": {},
+   "source": [
+    "# rewrite model exec files\n",
+    "nproc = 1\n",
+    "dimrset_folder = 'docker'\n",
+    "dfmt.create_model_exec_files(file_mdu=mdu_file, nproc=nproc, dimrset_folder=dimrset_folder)\n"
+   ]
+  }
+
+upload_header = {
+   "cell_type": "markdown",
+   # "id": "cf77ed64",
+   "metadata": {},
+   "source": [
+    "### Upload to s3 bucket (available on EDITO Datalab only)"
+   ]
+  }
+
+upload_code = {
    "cell_type": "code",
    # "execution_count": 19,
    # "id": "25bcaec2",
@@ -42,8 +93,13 @@ dict_2_code = {
    ]
   }
 
-ipynb_json["cells"].append(dict_1_header)
-ipynb_json["cells"].append(dict_2_code)
+ipynb_json["cells"].append(edito_header)
+ipynb_json["cells"].append(mdu_header)
+ipynb_json["cells"].append(mdu_code)
+ipynb_json["cells"].append(docker_header)
+ipynb_json["cells"].append(docker_code)
+ipynb_json["cells"].append(upload_header)
+ipynb_json["cells"].append(upload_code)
 
 with open(file_ipynb.replace(".ipynb","_edito.ipynb"), "w") as f:
     json.dump(ipynb_json, f, indent=2)
