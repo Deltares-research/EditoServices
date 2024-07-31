@@ -15,6 +15,3 @@ wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/mode
 python extend_modelbuilder_notebook.py modelbuilder_example.ipynb
 rm modelbuilder_example.ipynb
 rm extend_modelbuilder_notebook.py
-
-# somehow the files get downloaded twice, so delete *.1 files
-rm -f *.1
