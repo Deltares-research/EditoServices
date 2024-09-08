@@ -99,14 +99,18 @@ done
 
 # Scan container directory for sif containers
 shopt -s nullglob
-container_file_paths=($(ls $container_folder/*.sif))
-container_file_path=
-
-if [ ${#container_file_paths[@]} -eq 1 ]; then
-    container_file_path=${container_file_paths[0]}
+if [[ "$container_folder" == *.sif ]]; then
+    container_file_path="$container_folder"
 else
-    echo "ERROR: Container directory must contain one and only one *.sif file."
-    exit 2 # Exit code 2 to indicate that no such file is present
+  container_file_paths=($(ls $container_folder/*.sif))
+  container_file_path=
+
+  if [ ${#container_file_paths[@]} -eq 1 ]; then
+      container_file_path=${container_file_paths[0]}
+  else
+      echo "ERROR: Container directory must contain one and only one *.sif file."
+      exit 2 # Exit code 2 to indicate that no such file is present
+  fi
 fi
 shopt -u nullglob
 
