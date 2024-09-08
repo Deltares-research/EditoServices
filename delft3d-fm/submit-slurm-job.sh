@@ -2,7 +2,9 @@
 
 #--- Setup the container ------------------------------------------------------------------------------------
 # For use within Deltares, Delft3D FM Apptainer containers are available here: P:\d-hydro\delft3dfm_containers\
+
 # Specify the folder that contains the required version of the Apptainer container
+#container_path=/u/farrag/containers/delft3dfm_2024.03
 container_path=/u/farrag/containers/delft3dfm_2024.03/delft3dfm_2024.03_lnx64_sif1227.sif
 
 
