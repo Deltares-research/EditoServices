@@ -10,6 +10,12 @@ container_path=/u/farrag/containers/delft3dfm_2024.03/delft3dfm_2024.03_lnx64_si
 
 #--- Setup the model ----------------------------------------------------------------------------------------
 # Specify the ROOT folder of your model, i.e. the folder that contains ALL of the input files and sub-folders, e.g:
+# model_dir/
+# ├── dflowfm
+# │   ├── model.mdu
+# │   └── ...
+# └── dimr_config.xml
+
 model_dir=/u/farrag/containers/test-case/original
 
 script_path="$model_dir/trigger-container.sh"
@@ -24,7 +30,6 @@ script_path="$model_dir/trigger-container.sh"
 #   - Execute this script from the command line of H7 using:
 #     sbatch ./submit_singularity_h7.sh
 #
-
 
 #--- Specify Slurm SBATCH directives ------------------------------------------------------------------------
 #SBATCH --nodes=2               # Number of nodes.
