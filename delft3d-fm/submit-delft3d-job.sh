@@ -1,5 +1,18 @@
 #! /bin/bash
- 
+
+#--- Setup the container ------------------------------------------------------------------------------------
+# For use within Deltares, Delft3D FM Apptainer containers are available here: P:\d-hydro\delft3dfm_containers\
+# Specify the folder that contains the required version of the Apptainer container
+container_path=/u/farrag/containers/delft3dfm_2024.03
+
+
+#--- Setup the model ----------------------------------------------------------------------------------------
+# Specify the ROOT folder of your model, i.e. the folder that contains ALL of the input files and sub-folders, e.g:
+model_dir=/u/farrag/containers/test-case/original
+
+script_path="$model_dir/execute_singularity_h7.sh"
+
+
 # This is a script for submitting single or multi-node simulations to the Slurm cluster at Deltares (H7).
 # Note: Apptainer is the replacement for Singularity.
 
@@ -30,21 +43,11 @@ module load apptainer/1.2.5     # Load the Apptainer container system software.
 module load intelmpi/2021.9.0   # Load the  message-passing library for parallel simulations.
 
 
-#--- Setup the container ------------------------------------------------------------------------------------
-# For use within Deltares, Delft3D FM Apptainer containers are available here: P:\d-hydro\delft3dfm_containers\
-# Specify the folder that contains the required version of the Apptainer container
-containerFolder=/u/farrag/containers/delft3dfm_2024.03
-
-
-#--- Setup the model ----------------------------------------------------------------------------------------
-# Specify the ROOT folder of your model, i.e. the folder that contains ALL of the input files and sub-folders, e.g:
-modelFolder=/u/farrag/containers/test-case/original
-
 # Specify the folder containing your model's MDU file.
-mdufileFolder=$modelFolder/dflowfm
+mdufileFolder=$model_dir/dflowfm
 
 # Specify the folder containing your DIMR configuration file.
-dimrconfigFolder=$modelFolder
+dimrconfigFolder=$model_dir
 
 # The name of the DIMR configuration file. The default name is dimr_config.xml. This file must already exist!
 dimrFile=dimr_config.xml
@@ -73,7 +76,7 @@ if [ "$SLURM_NTASKS" -gt 1 ]; then
     echo "Partitioning parallel model..."
     cd "$mdufileFolder"
     echo "Partitioning in folder ${PWD}"
-    srun -n 1 -N 1 $containerFolder/execute_singularity_h7.sh -c $containerFolder -m $modelFolder dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mduFile"
+    srun -n 1 -N 1 $script_path -c $container_path -m $model_dir dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mduFile"
 else
     #--- No partitioning ---
     echo ""
@@ -85,5 +88,5 @@ echo ""
 echo "Simulation..."
 cd $dimrconfigFolder
 echo "Computing in folder ${PWD}"
-srun $containerFolder/execute_singularity_h7.sh -c $containerFolder -m $modelFolder dimr "$dimrFile"
+srun $script_path -c $container_path -m $model_dir dimr "$dimrFile"
 echo "Submitted job: $SLURM_JOB_ID Number of partitions: $SLURM_NTASKS"
