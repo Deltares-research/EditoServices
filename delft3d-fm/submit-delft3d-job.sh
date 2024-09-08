@@ -3,14 +3,15 @@
 #--- Setup the container ------------------------------------------------------------------------------------
 # For use within Deltares, Delft3D FM Apptainer containers are available here: P:\d-hydro\delft3dfm_containers\
 # Specify the folder that contains the required version of the Apptainer container
-container_path=/u/farrag/containers/delft3dfm_2024.03
+container_path=/u/farrag/containers/delft3dfm_2024.03/delft3dfm_2024.03_lnx64_sif1227.sif
 
 
 #--- Setup the model ----------------------------------------------------------------------------------------
 # Specify the ROOT folder of your model, i.e. the folder that contains ALL of the input files and sub-folders, e.g:
 model_dir=/u/farrag/containers/test-case/original
 
-script_path="$model_dir/execute_singularity_h7.sh"
+script_path="$model_dir/trigger-container.sh"
+
 
 
 # This is a script for submitting single or multi-node simulations to the Slurm cluster at Deltares (H7).
@@ -44,13 +45,13 @@ module load intelmpi/2021.9.0   # Load the  message-passing library for parallel
 
 
 # Specify the folder containing your model's MDU file.
-mdufileFolder=$model_dir/dflowfm
+mdu_file_dir=$model_dir/dflowfm
 
 # Specify the folder containing your DIMR configuration file.
-dimrconfigFolder=$model_dir
+dimr_config_dir=$model_dir
 
 # The name of the DIMR configuration file. The default name is dimr_config.xml. This file must already exist!
-dimrFile=dimr_config.xml
+dimr_file=dimr_config.xml
 
 # This setting might help to prevent errors due to temporary locking of NetCDF files.
 export HDF5_USE_FILE_LOCKING=FALSE
@@ -63,20 +64,20 @@ set -e
 # The updated list of numbered partitions is calculated from the user specified number of nodes and cores.
 # You DO NOT need to modify the lines below.
 PROCESSSTR="$(seq -s " " 0 $((SLURM_NTASKS-1)))"
-sed -i "s/\(<process.*>\)[^<>]*\(<\/process.*\)/\1$PROCESSSTR\2/" $dimrconfigFolder/$dimrFile
+sed -i "s/\(<process.*>\)[^<>]*\(<\/process.*\)/\1$PROCESSSTR\2/" $dimr_config_dir/$dimr_file
 
 # The name of the MDU file is read from the DIMR configuration file.
 # You DO NOT need to modify the line below.
-mduFile="$(sed -n 's/\r//; s/<inputFile>\(.*\).mdu<\/inputFile>/\1/p' $dimrconfigFolder/$dimrFile)".mdu
+mdu_file="$(sed -n 's/\r//; s/<inputFile>\(.*\).mdu<\/inputFile>/\1/p' $dimr_config_dir/$dimr_file)".mdu
 
 
 #--- Partition by calling the dflowfm executable -------------------------------------------------------------
 if [ "$SLURM_NTASKS" -gt 1 ]; then
     echo ""
     echo "Partitioning parallel model..."
-    cd "$mdufileFolder"
+    cd "$mdu_file_dir"
     echo "Partitioning in folder ${PWD}"
-    srun -n 1 -N 1 $script_path -c $container_path -m $model_dir dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mduFile"
+    srun -n 1 -N 1 $script_path -c $container_path -m $model_dir dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mdu_file"
 else
     #--- No partitioning ---
     echo ""
@@ -86,7 +87,7 @@ fi
 #--- Simulation by calling the dimr executable ----------------------------------------------------------------
 echo ""
 echo "Simulation..."
-cd $dimrconfigFolder
+cd $dimr_config_dir
 echo "Computing in folder ${PWD}"
-srun $script_path -c $container_path -m $model_dir dimr "$dimrFile"
+srun $script_path -c $container_path -m $model_dir dimr "$dimr_file"
 echo "Submitted job: $SLURM_JOB_ID Number of partitions: $SLURM_NTASKS"
