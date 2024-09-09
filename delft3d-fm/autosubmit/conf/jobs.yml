@@ -21,7 +21,7 @@ JOBS:
   #   WALLCLOCK: 00:05
 
   SIM:
-    FILE: templates/submit-autosubmit-job.sh
+    FILE: delft3d-fm/submit-autosubmit-job.sh
     WALLCLOCK: 00:05
     RUNNING: once
   # This simulation task has no other dependencies, but you could add
@@ -36,7 +36,7 @@ JOBS:
   # Autosubmit, showing that once SIM finishes, Autosubmit will run
   # CLEAN, which could, for instance, clean temporary files.
   CLEAN:
-    FILE: templates/clean.sh
+    FILE: delft3d-fm/clean.sh
     DEPENDENCIES: SIM
     RUNNING: once
     WALLCLOCK: 00:05
