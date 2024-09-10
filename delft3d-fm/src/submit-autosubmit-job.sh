@@ -1,8 +1,8 @@
 #! /bin/bash
 
 # Setup the container
-#container_path=/u/farrag/containers/delft3dfm_2024.03
-container_path=/u/farrag/containers/delft3dfm_2024.03/delft3dfm_2024.03_lnx64_sif1227.sif
+rdir="/gpfs/projects/bsc32/ehpc69/containers/schism2.sif"
+container_path=/home/onyxia/work/delft3dfm_2024.03_lnx64_sif1227.sif
 
 
 # Setup the model
@@ -20,8 +20,11 @@ script_path="$model_dir/trigger-container.sh"
 # Load modules
 module purge
 module load apptainer/1.2.5     # Load the Apptainer container system software.
-module load intelmpi/2021.9.0   # Load the  message-passing library for parallel simulations.
-
+# Load the  message-passing library for parallel simulations.
+load impi/2021.10.0
+load mkl/2023.2.0
+load UCX/1.15.0
+load bsc/1.0
 
 # Specify the folder containing your model's MDU file.
 mdu_file_dir=$model_dir/dflowfm
