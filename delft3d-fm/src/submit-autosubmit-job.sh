@@ -9,7 +9,7 @@ model_dir="/u/farrag/containers/test-case/original"
 # │   └── ...
 # └── dimr_config.xml
 # Setup the container
-RDIR="/*******/"
+RDIR="/gpfs/projects/bsc32/EDITO/containers/"
 CONTAINER_PATH="$RDIR/delft3dfm_2024.03_lnx64_sif1227.sif"
 SCRIPT_PATH="$RDIR/trigger-container.sh"
 
