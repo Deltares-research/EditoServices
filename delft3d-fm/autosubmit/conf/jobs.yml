@@ -64,3 +64,11 @@ PLATFORMS:
     ADD_PROJECT_TO_HOST: false
     MAX_WALLCLOCK: 48:00
     TEMP_DIR: ''
+
+# This tells Autosubmit to load an extra file... first it will load CUSTOM_CONFIG.PRE files, then this file
+# you are reading, and then files in CUSTOM_CONFIG.POST. If you do not use POST, then this file will override
+# the platform USER value.
+DEFAULT:
+  CUSTOM_CONFIG:
+    POST:
+      "~/platforms.yml"
