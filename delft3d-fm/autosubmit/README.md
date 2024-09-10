@@ -1,9 +1,4 @@
-# auto-schism2
-
-This project was created as a demo, for the `schism2.sif` singularity
-container provided by Hereon / Benjamin. It was successfully tested
-on MareNostrum 5 using a personal laptop with Autosubmit, and also
-using EDITO Model Lab.
+# Delft3d-fm
 
 ## Instructions
 
@@ -15,7 +10,8 @@ $ autosubmit expid \
     --minimal_configuration \
     --git_repo https://github.com/Deltares-research/EditoServices.git \
     --git_branch main \
-    --git_as_conf "conf/"
+    --git_as_conf "delft3d-fm/autosubmit/conf/"
+
 Autosubmit is running with 4.1.9
 The new experiment "a000" has been registered.
 Generating folder structure...
@@ -60,7 +56,7 @@ Now run `autosubmit create a000`, followed by `autosubmit run a000`.
 
 After some minutes, you should have successfully executed the workflow
 locally, that submits a `SIM` to MareNostrum 5 (note that there is
-no platform defined, but the `expid` command was called with `--HPC MN5`
+no platform defined, but the `expi  d` command was called with `--HPC MN5`
 to set the default platform).
 
 You can verify the output log of the `SIM` task (copied to your local
