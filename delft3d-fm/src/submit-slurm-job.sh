@@ -10,9 +10,9 @@
 
 model_dir=/u/farrag/containers/test-case/original
 # The name of the DIMR configuration file. The default name is dimr_config.xml. This file must already exist!
-dimr_file=dimr_config.xml
 executable=dimr
 executable_opts="$dimr_file"
+executable_opts=dimr_config.xml
 
 #--- Setup the container ------------------------------------------------------------------------------------
 # For use within Deltares, Delft3D FM Apptainer containers are available here: P:\d-hydro\delft3dfm_containers\
@@ -71,11 +71,11 @@ if [ "$executable" = "dimr" ]; then
   # The updated list of numbered partitions is calculated from the user specified number of nodes and cores.
   # You DO NOT need to modify the lines below.
   PROCESSSTR="$(seq -s " " 0 $((SLURM_NTASKS-1)))"
-  sed -i "s/\(<process.*>\)[^<>]*\(<\/process.*\)/\1$PROCESSSTR\2/" $dimr_config_dir/$dimr_file
+  sed -i "s/\(<process.*>\)[^<>]*\(<\/process.*\)/\1$PROCESSSTR\2/" $dimr_config_dir/$executable_opts
 
   # The name of the MDU file is read from the DIMR configuration file.
   # You DO NOT need to modify the line below.
-  mdu_file="$(sed -n 's/\r//; s/<inputFile>\(.*\).mdu<\/inputFile>/\1/p' $dimr_config_dir/$dimr_file)".mdu
+  mdu_file="$(sed -n 's/\r//; s/<inputFile>\(.*\).mdu<\/inputFile>/\1/p' $dimr_config_dir/$executable_opts)".mdu
 fi
 
 
@@ -85,7 +85,7 @@ if [ "$SLURM_NTASKS" -gt 1 ]; then
     echo "Partitioning parallel model..."
     cd "$mdu_file_dir"
     echo "Partitioning in folder ${PWD}"
-    srun -n 1 -N 1 $SCRIPT_PATH -c $CONTAINER_PATH -m $model_dir dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mdu_file"
+    srun -n 1 -N 1 $SCRIPT_PATH -c $CONTAINER_PATH -m "$model_dir" dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mdu_file"
 else
     #--- No partitioning ---
     echo ""
