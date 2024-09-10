@@ -1,10 +1,6 @@
 #! /bin/bash
 
-# Setup the container
-rdir="/gpfs/projects/bsc32/ehpc69/containers/schism2.sif"
-container_path=/home/onyxia/work/delft3dfm_2024.03_lnx64_sif1227.sif
-
-
+model_dir="/u/farrag/containers/test-case/original"
 # Setup the model
 # Specify the ROOT folder of your model, i.e. the folder that contains ALL of the input files and sub-folders, e.g:
 # model_dir/
@@ -12,9 +8,10 @@ container_path=/home/onyxia/work/delft3dfm_2024.03_lnx64_sif1227.sif
 # │   ├── model.mdu
 # │   └── ...
 # └── dimr_config.xml
-
-model_dir=/u/farrag/containers/test-case/original
-script_path="$model_dir/trigger-container.sh"
+# Setup the container
+RDIR="/*******/"
+CONTAINER_PATH="$RDIR/delft3dfm_2024.03_lnx64_sif1227.sif"
+SCRIPT_PATH="$RDIR/trigger-container.sh"
 
 
 # Load modules
@@ -58,8 +55,8 @@ if [ "$SLURM_NTASKS" -gt 1 ]; then
     echo ""
     echo "Partitioning parallel model..."
     cd "$mdu_file_dir"
-    echo "Partitioning in folder ${PWD}"
-    srun -n 1 -N 1 $script_path -c $container_path -m $model_dir dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mdu_file"
+    echo "Partitioning in dir ${PWD}"
+    srun -n 1 -N 1 "$SCRIPT_PATH" -c "$CONTAINER_PATH" -m "$model_dir" dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mdu_file"
 else
     #--- No partitioning ---
     echo ""
@@ -69,7 +66,8 @@ fi
 #--- Simulation by calling the dimr executable ----------------------------------------------------------------
 echo ""
 echo "Simulation..."
-cd $dimr_config_dir
-echo "Computing in folder ${PWD}"
-srun $script_path -c $container_path -m $model_dir dimr "$dimr_file"
+cd "$dimr_config_dir"
+
+echo "Running DIMR in dir ${PWD}, with config file $dimr_file"
+$SCRIPT_PATH -c "$CONTAINER_PATH" -m "$model_dir" dimr "$dimr_file"
 echo "Submitted job: $SLURM_JOB_ID Number of partitions: $SLURM_NTASKS"
