@@ -58,7 +58,7 @@ PLATFORMS:
     # You need a valid BSC user, in this case from bsc, or adjust
     # the project above and maybe the scratch dir below if needed.
     # Write your username replacing <BSC32_USER>.
-    USER: <BSC32_USER>
+    USER: delt550999
     QUEUE: gp_debug
     SCRATCH_DIR: /gpfs/scratch
     ADD_PROJECT_TO_HOST: false
