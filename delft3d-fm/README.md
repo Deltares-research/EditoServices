@@ -2,6 +2,7 @@
 
 ## Instructions
 
+1- Create a new Autosubmit experiment using this project.
 ```bash
 $ # Create a new Autosubmit experiment using this project
 $ autosubmit expid \
@@ -9,7 +10,7 @@ $ autosubmit expid \
     --description "Delft3D-fm" \
     --minimal_configuration \
     --git_repo https://github.com/Deltares-research/EditoServices.git \
-    --git_branch main \
+    --git_branch dflowfm-singularity \
     --git_as_conf "delft3d-fm/autosubmit/conf/"
 
 Autosubmit is running with 4.1.9
@@ -40,7 +41,7 @@ PLATFORMS:
   MN5:
     TYPE: slurm
     HOST: glogin1.bsc.es
-    PROJECT: bsc32
+    PROJECT: ehpc69
     # You need a valid BSC user, in this case from bsc, or adjust
     # the project above and maybe the scratch dir below if needed.
     # Write your username replacing <BSC32_USER>.
