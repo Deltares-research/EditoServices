@@ -24,7 +24,7 @@ export I_MPI_DEBUG=5
 export I_MPI_HYDRA_BOOTSTRAP=slurm
 
 # Make Intel MPI use slurm's PMI Library (optional).
-export I_MPI_PMI_LIBRARY=/host/lib64/libpmi2.so
+export I_MPI_PMI_LIBRARY=$I_MPI_PMI_LIBRARY
 
 #
 #
