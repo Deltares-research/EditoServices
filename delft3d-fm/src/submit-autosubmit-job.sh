@@ -1,6 +1,6 @@
 #! /bin/bash
 
-model_dir="/u/farrag/containers/test-case/original"
+model_dir="<path/to/your/model>"
 # The name of the DIMR configuration file. The default name is dimr_config.xml. This file must already exist!
 executable=dimr
 executable_opts=dimr_config.xml
@@ -60,7 +60,7 @@ if [ "$SLURM_NTASKS" -gt 1 ]; then
     echo "Partitioning parallel model..."
     cd "$mdu_file_dir"
     echo "Partitioning in dir ${PWD}"
-    srun -n 1 -N 1 "$SCRIPT_PATH" -c "$CONTAINER_PATH" -m "$model_dir" dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mdu_file"
+    "$SCRIPT_PATH" -c "$CONTAINER_PATH" -m "$model_dir" dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mdu_file"
 else
     #--- No partitioning ---
     echo ""
