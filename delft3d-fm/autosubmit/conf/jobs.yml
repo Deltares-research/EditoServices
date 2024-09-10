@@ -35,11 +35,11 @@ JOBS:
   # This is just an example of how things are chained/connected in
   # Autosubmit, showing that once SIM finishes, Autosubmit will run
   # CLEAN, which could, for instance, clean temporary files.
-  CLEAN:
-    FILE: delft3d-fm/src/clean.sh
-    DEPENDENCIES: SIM
-    RUNNING: once
-    WALLCLOCK: 00:05
+  #   CLEAN:
+  #     FILE: delft3d-fm/src/clean.sh
+  #     DEPENDENCIES: SIM
+  #     RUNNING: once
+  #     WALLCLOCK: 00:05
 
 EXPERIMENT:
   DATELIST: "20000101"
