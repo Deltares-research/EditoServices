@@ -155,7 +155,7 @@ echo "Executing apptainer exec $container_bindir/$executable $executable_opts"
 # See also https://apptainer.org/docs/user/latest/environment_and_metadata.html
 #
 
-apptainer exec \
+singularity exec \
                  --bind $model_folder:$mountdir,$MPI_DIR:$MPI_DIR,/usr/:/host,/usr/lib64/:/host/lib64 \
                  --pwd $container_working_dir \
                  --no-home \
