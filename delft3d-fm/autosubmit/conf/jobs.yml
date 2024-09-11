@@ -23,7 +23,7 @@ PLATFORMS:
     # Write your username replacing <BSC32_USER>.
     USER: delt550999
     QUEUE: gp_debug
-    SCRATCH_DIR: /gpfs/scratch
+    SCRATCH_DIR: /gpfs/scratch/ehpc69/delt550999
     ADD_PROJECT_TO_HOST: false
     MAX_WALLCLOCK: 48:00
     TEMP_DIR: ''
