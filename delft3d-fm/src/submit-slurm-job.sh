@@ -106,8 +106,8 @@ SCRIPT_PATH="$RDIR/trigger-container.sh"
 
 #--- Load modules (for use within Deltares) ------------------------------------------------------------------
 module purge
-module load apptainer/1.2.5     # Load the Apptainer container system software.
-module load intelmpi/2021.9.0   # Load the  message-passing library for parallel simulations.
+module load singularity     # Load the Apptainer container system software.
+module load impi/2021.12    # Load the  message-passing library for parallel simulations.
 
 
 # Specify the folder containing your model's MDU file.
