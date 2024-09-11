@@ -19,6 +19,7 @@ PLATFORMS:
     HOST: glogin1.bsc.es
     PROJECT: ehpc69
     USER: delt550999
+    QUEUE: gp_ehpc
     SCRATCH_DIR: /gpfs/scratch
     ADD_PROJECT_TO_HOST: false
     MAX_WALLCLOCK: 48:00
