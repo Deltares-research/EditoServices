@@ -22,12 +22,9 @@ SCRIPT_PATH="$RDIR/trigger-container.sh"
 
 # Load modules
 module purge
-module load apptainer/1.2.5     # Load the Apptainer container system software.
-# Load the  message-passing library for parallel simulations.
-load impi/2021.10.0
-load mkl/2023.2.0
-load UCX/1.15.0
-load bsc/1.0
+module load singularity     # Load the Apptainer container system software.
+module load impi/2021.12    # Load the  message-passing library for parallel simulations.
+
 
 # Specify the folder containing your model's MDU file.
 mdu_file_dir=$model_dir/dflowfm
