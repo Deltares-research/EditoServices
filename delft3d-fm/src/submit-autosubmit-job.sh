@@ -57,7 +57,7 @@ if [ "$SLURM_NTASKS" -gt 1 ]; then
     echo "Partitioning parallel model..."
     cd "$mdu_file_dir"
     echo "Partitioning in dir ${PWD}"
-    "$SCRIPT_PATH" -c "$CONTAINER_PATH" -m "$model_dir" dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mdu_file"
+    srun -n 1 -N 1 "$SCRIPT_PATH" -c "$CONTAINER_PATH" -m "$model_dir" dflowfm --nodisplay --autostartstop --partition:ndomains="$SLURM_NTASKS":icgsolver=6 "$mdu_file"
 else
     #--- No partitioning ---
     echo ""
@@ -70,5 +70,5 @@ echo "Simulation..."
 cd "$dimr_config_dir"
 
 echo "Running $executable in dir ${PWD}, with config file $executable_opts"
-$SCRIPT_PATH -c "$CONTAINER_PATH" -m "$model_dir" "$executable" "$executable_opts"
+srun $SCRIPT_PATH -c "$CONTAINER_PATH" -m "$model_dir" "$executable" "$executable_opts"
 echo "Submitted job: $SLURM_JOB_ID Number of partitions: $SLURM_NTASKS"
