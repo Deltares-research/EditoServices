@@ -111,7 +111,7 @@ scancel <jobid>
 
 - The following error was observed when running the model regardless of the number of nodes used.
 - The error was observed when running the model on the MareNostrum 5 supercomputer using the Singularity container.
-- The default MPI library used to develop and test the Singularity container is Intel MPI.
+- The default MPI library used to develop and test the Singularity container is Intel MPI (intelmpi).
 
 ```bash
 MPIR_pmi_virtualization(): MPI startup(): PMI calls are forwarded to /host/lib64/libpmi2.so
