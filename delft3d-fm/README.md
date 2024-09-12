@@ -106,3 +106,46 @@ squeue -u <username>
 ```bash
 scancel <jobid>
 ```
+
+# MPI Errors
+
+- The following error was observed when running the model regardless of the number of nodes used.
+- The error was observed when running the model on the MareNostrum 5 supercomputer using the Singularity container.
+- The default MPI library used to develop and test the Singularity container is Intel MPI.
+
+```bash
+MPIR_pmi_virtualization(): MPI startup(): PMI calls are forwarded to /host/lib64/libpmi2.so
+[0] MPI startup(): Intel(R) MPI Library, Version 2021.12  Build 20240213 (id: 4f55822)
+[0] MPI startup(): Copyright (C) 2003-2024 Intel Corporation.  All rights reserved.
+[0] MPI startup(): library kind: release
+[0] MPI startup(): libfabric version: 1.18.1-impi
+[0] MPI startup(): libfabric provider: psm3
+[1726132598.969476568] gs03r2b72:rank0.dimr: unknown link speed 0x80
+[1726132598.976312809] gs03r2b72:rank0.dimr: Failed to modify UD QP to INIT on mlx5_0: Operation not permitted
+Abort(1614735) on node 0 (rank 0 in comm 0): Fatal error in PMPI_Init: Unknown error class, error stack:
+MPIR_Init_thread(192)........: 
+MPID_Init(1645)..............: 
+MPIDI_OFI_mpi_init_hook(1653): 
+create_vni_context(2253).....: OFI endpoint open failed (ofi_init.c:2253:create_vni_context:Invalid argument)
+srun: error: gs03r2b72: task 0: Exited with exit code 1
+srun: Terminating StepId=6375265.0
+```
+
+- The used mpi in the cluster is impi/2021.13
+
+```bash
+---------------------------------------------------------------------------------------------------------------- /apps/GPP/modulefiles/environment -----------------------------------------------------------------------------------------------------------------
+   R/4.2.0-gcc               bsc/1.0        (L)      impi/2021.11                  intel-advisor/2024.0.1     java-openjdk/22.0.1 (D)    nvidia-hpc-sdk/23.11-cuda11.8        oneapi/2023.2.0       (L,D)    perl/5.38.2            python/3.12.1 (D)
+   R/4.3.0-BiocM-3.18        ear/ear                 impi/2021.12                  intel-advisor/2024.1       julia/1.10.0               nvidia-hpc-sdk/23.11          (D)    oneapi/2024.0.1                python/3.8.18-gcc      transfer/1.0
+   R/4.3.0                   impi/2021.4.0           impi/2021.13                  java-jdk/8u131             miniconda/24.1.2           nvidia-hpc-sdk/24.3                  oneapi/2024.1                  python/3.8.18
+   R/4.3.2-cairo             impi/2021.6.0           intel-advisor/2021.4          java-openjdk/11.0.2        miniforge/24.3.0-0         nvidia-hpc-sdk/24.5                  oneapi/2024.2                  python/3.9.16-gcc
+   R/4.3.2            (D)    impi/2021.8             intel-advisor/2023.0.0        java-openjdk/11.0.18+10    mpich/4.2.2-gcc            oneapi/2021.4                        openmpi/4.1.5-gcc              python/3.9.16
+   anaconda/2023.07   (D)    impi/2021.9.0           intel-advisor/2023.1          java-openjdk/17.0.11+9     mvapich/3.0                oneapi/2023.0                        openmpi/4.1.5-gcc12.3          python/3.12.1-debug
+   anaconda/2024.02          impi/2021.10.0 (L,D)    intel-advisor/2023.2.0 (D)    java-openjdk/21.0.3+9      nvidia-hpc-sdk/23.9        oneapi/2023.1                        openmpi/4.1.5         (D)      python/3.12.1-gcc
+```
+
+- The error is not consistent, so when the job succeeds, the output is in the file: #dflow-fm/test-case/slurm-62775.out
+- Successful runs with both 1 and 2 nodes are included in the files.
+  - dflow-fm/test-case/one-node-one-task-successful-job-slurm.out
+  - dflow-fm/test-case/two-nodes-two-tasks-per-node-successful-job.out
+
