@@ -32,78 +32,18 @@
 # │   └── ...
 # └── dimr_config.xml
 
-
-#model_dir=/u/farrag/containers/test-case/original
-## The name of the DIMR configuration file. The default name is dimr_config.xml. This file must already exist!
-#executable=dimr
-#executable_opts=dimr_config.xml
-
-function print_usage_info {
-    echo "Usage: ${0##*/} executable [OPTIONS]"
-    echo "       ${0##*/} [-m | --model-dir] model directory [OPTIONS]"
-    echo "       ${0##*/} [-ex | --executable] executable [OPTIONS]"
-    echo "       ${0##*/} [-eo|--executable-opts] executable options [OPTIONS]"
-    echo "       ${0##*/} [-h | --help]"
-    echo "Runs executable inside Apptainer container by wrapping and passing additional arguments."
-    echo
-    echo "Options:"
-    echo "-h, --help"
-    echo "       Print this help message and exit"
-    echo "-m, --model-dir"
-    echo "       The root folder of the model, i.e. the folder that contains ALL of the input files and sub-folders"
-    echo "       (Default value: current working folder)"
-    exit 1
-}
-
-# Main
-if [[ $# -eq 0 ]]; then
-    print_usage_info
-fi
-
-# Parse the first argument of the script
-while [[ $# -ge 1 ]]
-do
-    key="$1"
-    shift
-    case $key in
-        -h|--help)
-        print_usage_info
-        ;;
-        -m|--model-dir)
-        model_dir=$1
-        shift
-        ;;
-        -ex|--executable)
-        executable=$1
-        shift
-        ;;
-        -eo|--executable-opts)
-        executable_opts=$1
-        shift
-        ;;
-        -*|--*)
-        echo "Unknown option: $key"
-        echo
-        print_usage_info
-        ;;
-        *)
-        executable=$key    # The first unknown argument is the executable
-        executable_opts=$* # Parse the remaining arguments and pass it as additional arguments to the executable as extra options
-        break
-        ;;
-    esac
-done
-
+model_dir=/home/delt/delt550999/test-case
+# The name of the DIMR configuration file. The default name is dimr_config.xml. This file must already exist!
+executable=dimr
+executable_opts=dimr_config.xml
 
 #--- Setup the container ------------------------------------------------------------------------------------
 # For use within Deltares, Delft3D FM Apptainer containers are available here: P:\d-hydro\delft3dfm_containers\
 
 # Specify the folder that contains the required version of the Apptainer container
-#container_path=/u/farrag/containers/delft3dfm_2024.03
-RDIR="/u/farrag/containers/delft3dfm_2024.03"
+RDIR="/gpfs/projects/ehpc69/containers/delft3d-fm"
 CONTAINER_PATH="$RDIR/delft3dfm_2024.03_lnx64_sif1227.sif"
 SCRIPT_PATH="$RDIR/trigger-container.sh"
-
 #--- Load modules (for use within Deltares) ------------------------------------------------------------------
 module purge
 module load singularity     # Load the Apptainer container system software.
