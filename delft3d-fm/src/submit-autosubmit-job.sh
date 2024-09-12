@@ -1,17 +1,17 @@
 #! /bin/bash
+USER=delt550999
+executable=dimr
+executable_opts=dimr_config.xml
+SLURM_NTASKS=1
 
 echo "Current working directory: ${PWD}"
-cd /home/delt/delt550999/from-edito
+cd "/home/delt/$USER/from-edito"
 echo "Current working directory: ${PWD}"
 # this path should be the same as the one in the submit-slurm-job.sh script
 # the user name "delt550999" should be changed to the one of the user
 # the name "delt" should be changed to the one of the user
-model_dir=/home/delt/delt550999/from-edito
+model_dir="/home/delt/$USER/from-edito"
 # The name of the DIMR configuration file. The default name is dimr_config.xml. This file must already exist!
-executable=dimr
-executable_opts=dimr_config.xml
-
-SLURM_NTASKS=1
 
 # Setup the model
 # Specify the ROOT folder of your model, i.e. the folder that contains ALL of the input files and sub-folders, e.g:
