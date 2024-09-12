@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# this path should be the same as the one in the submit-slurm-job.sh script
+# the user name "delt550999" should be changed to the one of the user
+# the name "delt" should be changed to the one of the user
 model_dir=/home/delt/delt550999/from-edito
 # The name of the DIMR configuration file. The default name is dimr_config.xml. This file must already exist!
 executable=dimr
