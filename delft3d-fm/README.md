@@ -12,13 +12,6 @@ $ autosubmit expid \
     --git_repo https://github.com/Deltares-research/EditoServices.git \
     --git_branch dflowfm-singularity \
     --git_as_conf "delft3d-fm/autosubmit/conf/"
-
-Autosubmit is running with 4.1.9
-The new experiment "a000" has been registered.
-Generating folder structure...
-Experiment folder: /home/kinow/autosubmit/a000
-Generating config files...
-Experiment a000 created
 ```
 
 Modify the `minimal.yml` created for your experiment, in this example:
@@ -93,8 +86,7 @@ was launched from, e.g. `~/autosubmit/a000/tmp/{LOG_a000,ASLOGS}`.
 - run using SLURM
 ```bash
 sbatch --qos=gp_ehpc --account=ehpc69 --partition=gpp --nodes=1 --ntasks-per-node=1 \
-  ./submit-slurm-job.sh \ 
-  -m <path/to/your/model-dir> \ 
+  ./submit-slurm-job.sh 
 ```
 
 - Check the status of the job
