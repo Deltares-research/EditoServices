@@ -1,7 +1,6 @@
 JOBS:
   COPY-DATA:
     FILE: delft3d-fm/src/copy-data.sh
-    DEPENDENCIES: SIM
     RUNNING: once
     WALLCLOCK: 00:10
   SIM:
