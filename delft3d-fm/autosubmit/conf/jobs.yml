@@ -3,14 +3,14 @@ JOBS:
 #     FILE: delft3d-fm/src/copy-data-edito-to-cluster.sh
 #     RUNNING: once
 #     WALLCLOCK: 00:10
-  SIM:
-    FILE: delft3d-fm/src/submit-autosubmit-job.sh
-#     DEPENDENCIES: COPYINPUTS
-    WALLCLOCK: 00:48
-    RUNNING: once
+#   SIM:
+#     FILE: delft3d-fm/src/submit-autosubmit-job.sh
+# #     DEPENDENCIES: COPYINPUTS
+#     WALLCLOCK: 00:48
+#     RUNNING: once
   COPYRESULTS:
     FILE: delft3d-fm/src/copy-data-cluster-to-edito.sh
-    DEPENDENCIES: SIM
+#     DEPENDENCIES: SIM
     WALLCLOCK: 00:10
     RUNNING: once
 
