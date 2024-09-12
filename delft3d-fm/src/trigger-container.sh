@@ -24,7 +24,7 @@ export I_MPI_DEBUG=5
 export I_MPI_HYDRA_BOOTSTRAP=slurm
 
 # Make Intel MPI use slurm's PMI Library (optional).
-export I_MPI_PMI_LIBRARY=$I_MPI_PMI_LIBRARY
+export I_MPI_PMI_LIBRARY=/host/lib64/libpmi2.so
 
 #
 #
@@ -154,6 +154,8 @@ echo "Executing apptainer exec $container_bindir/$executable $executable_opts"
 # --cleanenv will probably not work for multiple node computations.
 # See also https://apptainer.org/docs/user/latest/environment_and_metadata.html
 #
+echo "list of files in the cwd"
+echo -e "$(ls)"
 
 singularity exec \
                  --bind $model_folder:$mountdir,$MPI_DIR:$MPI_DIR,/usr/:/host,/usr/lib64/:/host/lib64 \

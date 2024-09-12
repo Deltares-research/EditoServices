@@ -1,6 +1,6 @@
 # Delft3d-fm
 
-## Instructions
+## Autosubmit
 
 1- Create a new Autosubmit experiment using this project.
 ```bash
@@ -28,15 +28,6 @@ your file (indentation matters here).
  ```yaml
 # These settings are not necessary for your experiment, but are required
 # by Autosubmit: https://earth.bsc.es/gitlab/es/autosubmit/-/issues/1091
-EXPERIMENT:
-  DATELIST: "20000101"
-  MEMBERS: "fc0"
-  CHUNKSIZEUNIT: month
-  CHUNKSIZE: "4"
-  NUMCHUNKS: "2"
-  CHUNKINI: ''
-  CALENDAR: standard
-
 PLATFORMS:
   MN5:
     TYPE: slurm
@@ -45,7 +36,7 @@ PLATFORMS:
     # You need a valid BSC user, in this case from bsc, or adjust
     # the project above and maybe the scratch dir below if needed.
     # Write your username replacing <BSC32_USER>.
-    USER: <BSC32_USER>
+    USER: <USER-ID>
     QUEUE: gp_debug
     SCRATCH_DIR: /gpfs/scratch
     ADD_PROJECT_TO_HOST: false
@@ -57,7 +48,7 @@ Now run `autosubmit create a000`, followed by `autosubmit run a000`.
 
 After some minutes, you should have successfully executed the workflow
 locally, that submits a `SIM` to MareNostrum 5 (note that there is
-no platform defined, but the `expi  d` command was called with `--HPC MN5`
+no platform defined, but the `expid` command was called with `--HPC MN5`
 to set the default platform).
 
 You can verify the output log of the `SIM` task (copied to your local
@@ -97,4 +88,21 @@ JobID                     Submit               Start                 End      St
 You should also have logs copied to the computer where `autosubmit`
 was launched from, e.g. `~/autosubmit/a000/tmp/{LOG_a000,ASLOGS}`.
 
+## SLURM
 
+- run using SLURM
+```bash
+sbatch --qos=gp_ehpc --account=ehpc69 --partition=gpp --nodes=1 --ntasks-per-node=1 \
+  ./submit-slurm-job.sh \ 
+  -m <path/to/your/model-dir> \ 
+```
+
+- Check the status of the job
+```bash
+squeue -u <username>
+```
+
+- Cancel the job
+```bash
+scancel <jobid>
+```
