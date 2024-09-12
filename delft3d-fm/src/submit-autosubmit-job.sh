@@ -1,6 +1,6 @@
 #! /bin/bash
 
-model_dir="<path/to/your/model>"
+model_dir=/home/delt/delt550999/from-edito
 # The name of the DIMR configuration file. The default name is dimr_config.xml. This file must already exist!
 executable=dimr
 executable_opts=dimr_config.xml
