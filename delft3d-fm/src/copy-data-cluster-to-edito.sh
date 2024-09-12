@@ -1,2 +1,4 @@
 #! /bin/bash
-scp -r delt550999@glogin1.bsc.es:from-edito/ results/
+echo "Current working directory: ${PWD}"
+USER=delt550999
+scp -r $USER@glogin1.bsc.es:from-edito/dflowfm/ results/
