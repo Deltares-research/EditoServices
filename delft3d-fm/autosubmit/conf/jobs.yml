@@ -8,11 +8,11 @@ JOBS:
 #     DEPENDENCIES: COPYINPUTS
     WALLCLOCK: 00:48
     RUNNING: once
-#   COPYRESULTS:
-#     FILE: delft3d-fm/src/copy-data-cluster-to-edito.sh
-#     DEPENDENCIES: SIM
-#     WALLCLOCK: 00:10
-#     RUNNING: once
+  COPYRESULTS:
+    FILE: delft3d-fm/src/copy-data-cluster-to-edito.sh
+    DEPENDENCIES: SIM
+    WALLCLOCK: 00:10
+    RUNNING: once
 
 EXPERIMENT:
   DATELIST: "20000101"
