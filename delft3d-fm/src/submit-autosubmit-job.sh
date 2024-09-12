@@ -1,6 +1,7 @@
 #! /bin/bash
 
 echo "Current working directory: ${PWD}"
+cd /home/delt/delt550999/from-edito
 # this path should be the same as the one in the submit-slurm-job.sh script
 # the user name "delt550999" should be changed to the one of the user
 # the name "delt" should be changed to the one of the user
