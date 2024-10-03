@@ -2,18 +2,7 @@
 
 import os
 import json
-import argparse
 
-
-# argument parser
-parser = argparse.ArgumentParser(
-                    prog='extend-modelbuider-notebook',
-                    description='adds some cells to the modelbuilder notebook')
-parser.add_argument('file_ipynb') # positional argument
-args = parser.parse_args()
-
-# directory with model input files
-file_ipynb = os.path.dirname(args.file_ipynb)
 file_ipynb = "modelbuilder_example.ipynb"
 
 with open(file_ipynb) as f:
@@ -101,6 +90,5 @@ ipynb_json["cells"].append(docker_code)
 ipynb_json["cells"].append(upload_header)
 ipynb_json["cells"].append(upload_code)
 
-with open(file_ipynb.replace(".ipynb","_edito.ipynb"), "w") as f:
+with open(file_ipynb, "w") as f:
     json.dump(ipynb_json, f, indent=2)
-
