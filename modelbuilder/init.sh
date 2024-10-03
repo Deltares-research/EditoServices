@@ -14,4 +14,5 @@ wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/mode
 wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/modelbuilder/extend_modelbuilder_notebook.py
 jupyter nbconvert --clear-output --inplace modelbuilder_example.ipynb
 python extend_modelbuilder_notebook.py
+rm modelbuilder_example.ipynb
 rm extend_modelbuilder_notebook.py

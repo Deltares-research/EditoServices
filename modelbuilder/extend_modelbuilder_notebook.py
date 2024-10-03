@@ -90,5 +90,5 @@ ipynb_json["cells"].append(docker_code)
 ipynb_json["cells"].append(upload_header)
 ipynb_json["cells"].append(upload_code)
 
-with open(file_ipynb, "w") as f:
+with open(file_ipynb.replace(".ipynb","_edito.ipynb"), "w") as f:
     json.dump(ipynb_json, f, indent=2)
