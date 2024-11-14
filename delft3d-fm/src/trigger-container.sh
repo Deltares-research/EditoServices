@@ -154,8 +154,10 @@ echo "Executing apptainer exec $container_bindir/$executable $executable_opts"
 # --cleanenv will probably not work for multiple node computations.
 # See also https://apptainer.org/docs/user/latest/environment_and_metadata.html
 #
+echo "list of files in the cwd"
+echo -e "$(ls)"
 
-apptainer exec \
+singularity exec \
                  --bind $model_folder:$mountdir,$MPI_DIR:$MPI_DIR,/usr/:/host,/usr/lib64/:/host/lib64 \
                  --pwd $container_working_dir \
                  --no-home \
