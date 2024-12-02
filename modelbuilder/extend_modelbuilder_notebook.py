@@ -34,6 +34,11 @@ mdu_code = {
    "source": [
     "# replace stretchtype in mdu to support old FM version in docker container until https://github.com/Deltares/HYDROLIB-core/issues/691 is fixed\n",
     "mdu.geometry.stretchtype = 0\n",
+    "\n",
+    "# add salinity and temperature processes\n",
+    "mdu.physics.salinity = 1\n",
+    "mdu.physics.temperature = 3\n",
+    "\n",
     "mdu.save(mdu_file) # ,path_style=path_style)\n",
     "dfmt.make_paths_relative(mdu_file)\n"
    ]
