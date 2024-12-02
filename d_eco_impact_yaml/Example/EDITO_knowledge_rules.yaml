@@ -1,0 +1,137 @@
+version: 0.1.3
+
+# Knowledge rules for EELGRASS (Zostera marina). Example file for the EDITO platform.
+
+input-data:
+  - dataset:
+      filename: "DFM_OUTPUT/Vietnam_map.nc" #input data
+      variable_mapping:
+        mesh2d_waterdepth:                              "Water_Depth" # meters
+        mesh2d_sa1:                                        "Salinity" # salinity concentration in PSU
+        mesh2d_ucmag:                                 "Flow_Velocity" #m/s
+        mesh2d_tem1:                                    "Temperature"
+
+rules:
+  
+  - time_aggregation_rule:
+      name: Time average temperature
+      description: get the mean value
+      operation: AVERAGE
+      time_scale: month
+      input_variable: Temperature
+      output_variable: Temperature_2D_avg
+  
+  - response_curve_rule:
+      name: HSI Temperature
+      description: Mapping to HSI
+      response_table:
+        - ["input", "output"]
+        - [     0 ,    0    ]
+        - [     4 ,    0.1  ]
+        - [     8 ,    0.2  ]
+        - [    12 ,    0.45 ]
+        - [    16 ,    0.85 ]
+        - [    18 ,    0.75 ]
+        - [    22 ,    0.65 ]
+        - [    24 ,    0.55 ]
+        - [    28 ,    0.4  ]
+        - [    32 ,    0.2  ]
+        - [    36 ,    0    ]
+        - [    40 ,    0    ]
+      input_variable: Temperature_2D_avg
+      output_variable: HSI_Temperature
+
+  - time_aggregation_rule:
+      name: Time max velocity
+      description: get the max value
+      operation: MAX
+      time_scale: month
+      input_variable: Flow_Velocity
+      output_variable: Flow_Velocity_2D_max
+  
+  - response_curve_rule:
+      name: HSI Flow_Velocity
+      description: Mapping to HSI
+      response_table:
+        - ["input", "output"]
+        - [  0    ,      1  ]
+        - [  0.5  ,      1  ]
+        - [  0.9  ,      0  ]
+        - [  2    ,      0  ]
+      input_variable: Flow_Velocity_2D_max
+      output_variable: HSI_Flow_Velocity
+     
+  - time_aggregation_rule:
+      name: Time average salinity
+      description: get the average value
+      operation: AVERAGE
+      time_scale: month
+      input_variable: Salinity
+      output_variable: Salinity_2D_avg
+  
+  - response_curve_rule:
+      name: HSI Salinity
+      description: Mapping HSI
+      response_table:
+        - ["input", "output"]
+        - [  0    ,  0      ]
+        - [ 16    ,  0      ]
+        - [ 20    ,  1      ]
+        - [ 29.5  ,  1      ]
+        - [ 31    ,  0.25   ]
+        - [ 32    ,  0      ]
+        - [ 75    ,  0      ]
+      input_variable: Salinity_2D_avg
+      output_variable: HSI_Salinity
+   
+  - formula_rule:
+      name: Inundation time rule
+      description: amount of time grid is inundated # threshold: 0.1m
+      formula: >
+        0 if ( Water_Depth <0.1) else 100
+      input_variables: [ Water_Depth ]
+      output_variable: Inundation_State
+  
+  - time_aggregation_rule:
+      name: Time average inundation state
+      description: get the mean value
+      operation: AVERAGE
+      time_scale: month
+      input_variable: Inundation_State
+      output_variable: Inundation_Time #0 always dry and 100 always inundated
+  
+  - response_curve_rule:
+      name: HSI Inundation_Time
+      description: Mapping to HSI
+      response_table:
+        - ["input", "output"]
+        - [     0 , 0       ]
+        - [    10 , 0       ]
+        - [    20 , 0       ]
+        - [    30 , 0       ]
+        - [    40 , 1       ]
+        - [    50 , 1       ]
+        - [    60 , 0       ]
+        - [    70 , 0       ]
+        - [    80 , 0       ]
+        - [    90 , 0       ]
+        - [   100 , 0       ]
+      input_variable: Inundation_Time
+      output_variable: HSI_Inundation_Time
+
+  - combine_results_rule:
+      name: MIN probability
+      description: minimum value of HSI parameters # HSI from 0 -1
+      operation: MIN
+      input_variables: [ HSI_Flow_Velocity , HSI_Temperature , HSI_Salinity , HSI_Inundation_Time]
+      output_variable: Total_HSI_MIN_month
+
+  - time_aggregation_rule:
+      name: Time average HSI_MIN
+      description: get the mean value
+      operation: AVERAGE
+      time_scale: year
+      input_variable: Total_HSI_MIN_month
+      output_variable: Total_HSI_MIN
+output-data:
+  filename: "d_eco_impact_output.nc" # location of output file
