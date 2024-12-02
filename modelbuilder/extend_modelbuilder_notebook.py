@@ -37,7 +37,7 @@ mdu_code = {
     "\n",
     "# add salinity and temperature processes\n",
     "mdu.physics.salinity = 1\n",
-    "mdu.physics.temperature = 3\n",
+    "mdu.physics.temperature = 5\n",
     "\n",
     "mdu.save(mdu_file) # ,path_style=path_style)\n",
     "dfmt.make_paths_relative(mdu_file)\n"
