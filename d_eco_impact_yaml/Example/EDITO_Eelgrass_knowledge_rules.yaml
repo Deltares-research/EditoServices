@@ -48,10 +48,17 @@ rules:
       input_variable: Temperature_2D_avg
       output_variable: HSI_Temperature
 
-  - depth_average_rule:
-      name: depth average velocity sigma layer model
-      description: depth average velocity sigma layer model
-      layer_type: "Sigma"
+  # - depth_average_rule:
+      # name: depth average velocity sigma layer model
+      # description: depth average velocity sigma layer model
+      # layer_type: "Sigma"
+      # input_variable: Flow_Velocity
+      # output_variable: Flow_Velocity_2D
+    
+  - layer_filter_rule:
+      name: select bottom current layer
+      description: select bottom layer
+      layer_number: 1
       input_variable: Flow_Velocity
       output_variable: Flow_Velocity_2D
  
