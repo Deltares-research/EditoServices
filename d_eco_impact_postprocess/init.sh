@@ -8,7 +8,9 @@ pip install "dfm_tools>=0.29.0"
 # pip install git+https://github.com/deltares/dfm_tools
 
 # open notebooks
-wget https://github.com/Deltares/dfm_tools/raw/main/docs/notebooks/postprocessing_example.ipynb
+# wget https://github.com/Deltares/dfm_tools/raw/main/docs/notebooks/postprocessing_example.ipynb
+wget https://github.com/Deltares-research/EditoServices/blob/main/dfm-postprocess/postprocessing_example.ipynb
+wget "-P" https://github.com/Deltares-research/EditoServices/blob/main/dfm-postprocess/validation-data/
 # wget https://github.com/Deltares/dfm_tools/raw/main/docs/notebooks/modelbuilder_example.ipynb
 # wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/modelbuilder/upload_model.py
 
