@@ -15,8 +15,6 @@ wget -p ../../../../validation-data https://github.com/Felix-Deltares/EditoServi
 #wget '-p' https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_postprocess/validation-data/ 
 
 
-
-
 # clear output
 jupyter nbconvert --clear-output --inplace postprocessing_example.ipynb
 
