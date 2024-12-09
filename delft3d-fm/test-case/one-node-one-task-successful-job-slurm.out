@@ -1,0 +1,259 @@
+unload bsc/1.0 (PATH, MANPATH)
+unload UCX/1.15.0 (PATH, LD_LIBRARY_PATH, LIBRARY_PATH, C_INCLUDE_PATH,
+CPLUS_INCLUDE_PATH)
+remove mkl/2023.2.0 (LD_LIBRARY_PATH)
+remove impi/2021.10.0 (PATH, MANPATH, LD_LIBRARY_PATH)
+load SINGULARITY/3.11.5 (PATH)
+load impi/2021.12 (PATH, MANPATH, LD_LIBRARY_PATH)
+
+Sequential model...
+
+Simulation...
+Running dimr in dir /home/delt/delt550999/test-case, with config file dimr_config.xml
+----------------------------------------------------------------------
+Executing Apptainer container with:
+Container file                            : /gpfs/projects/ehpc69/containers/delft3d-fm/delft3dfm_2024.03_lnx64_sif1227.sif
+Current   working directory               : /home/delt/delt550999/test-case
+Mounting  source  directory               : /home/delt/delt550999/test-case
+Mounting  target  directory               : /mnt/data
+Container working directory               : /mnt/data
+Executable                                : dimr
+Executable options                        : dimr_config.xml
+env PATH                 inside container : /gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/delft3dfm_latest/lnx64/bin
+env LD_LIBRARY_PATH      inside container : /gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/lib:/gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/lib/release:/gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/libfabric/lib:/usr/local/lib:/usr/lib:/opt/delft3dfm_latest/lnx64/lib
+env HDF5_USE_FILE_LOCKING inside container: FALSE
+
+Executing apptainer exec /opt/delft3dfm_latest/lnx64/bin/dimr dimr_config.xml
+list of files in the cwd
+dflowfm
+dimr_config.xml
+error-dimr-conf.out
+slurm-6199533.out
+slurm-6200207.out
+slurm-6216451.out
+slurm-6216716.out
+slurm-6218268.out
+slurm-6218269.out
+slurm-6259629.out
+slurm-6260508.out
+slurm-6260509.out
+slurm-6363500.out
+submit-slurm-job.sh
+submit-slurm-job00000.sh
+successful-1-node-1-task.out
+weird-error.out
+MPIR_pmi_virtualization(): MPI startup(): PMI calls are forwarded to /host/lib64/libpmi2.so
+[0] MPI startup(): Intel(R) MPI Library, Version 2021.12  Build 20240213 (id: 4f55822)
+[0] MPI startup(): Copyright (C) 2003-2024 Intel Corporation.  All rights reserved.
+[0] MPI startup(): library kind: release
+[0] MPI startup(): libfabric version: 1.18.1-impi
+[0] MPI startup(): libfabric provider: psm3
+[1726126379.088954926] gs15r1b01:rank0.dimr: unknown link speed 0x80
+[0] MPI startup(): Load tuning file: "/gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/etc/tuning_spr_shm-ofi.dat"
+[0] MPI startup(): File "/gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/etc/tuning_spr_shm-ofi.dat" not found
+[0] MPI startup(): Tuning file "/gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/etc/tuning_spr_shm-ofi.dat" was not loaded! Load default tuning file: "/gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/opt/mpi/etc/tuning_skx_shm-ofi.dat"
+[0] MPI startup(): Number of NICs:  1
+[0] MPI startup(): ===== NIC pinning on gs15r1b01 =====
+[0] MPI startup(): Rank    Pin nic
+[0] MPI startup(): 0       mlx5_0
+[0] MPI startup(): ===== CPU pinning =====
+[0] MPI startup(): Rank    Pid      Node name  Pin cpu
+[0] MPI startup(): 0       4004469  gs15r1b01  107
+[0] MPI startup(): I_MPI_ROOT=/gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12
+[0] MPI startup(): I_MPI_HYDRA_BOOTSTRAP=slurm
+[0] MPI startup(): I_MPI_EXTRA_FILESYSTEM=on
+[0] MPI startup(): I_MPI_EXTRA_FILESYSTEM_FORCE=gpfs
+[0] MPI startup(): I_MPI_TUNING_BIN=/gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/etc/tuning_spr_shm-ofi.dat
+[0] MPI startup(): I_MPI_DEBUG=5
+[0] MPI startup(): I_MPI_PMI_LIBRARY=/host/lib64/libpmi2.so
+#0: Running parallel with 1 partitions
+Dimr [2024-09-12 09:32:59.135652] #0 >> Deltares, DIMR_EXE Version 2.00.b981bf9c7329808883c69399458284afcf0d887f, Apr 19 2024, 16:58:33
+Dimr [2024-09-12 09:32:59.136953] #0 >> Deltares, DIMR_LIB Version 1.02.b981bf9c7329808883c69399458284afcf0d887f, Apr 19 2024, 16:58:26
+Dimr [2024-09-12 09:32:59.348106] #0 >>
+Dimr [2024-09-12 09:32:59.348129] #0 >> Version Information of Components
+Dimr [2024-09-12 09:32:59.348134] #0 >> =================================
+Dimr [2024-09-12 09:32:59.348138] #0 >> dflowfm                            : Deltares, D-Flow FM1.2.184.b981bf9c7329808883c69399458284afcf0d887f
+Dimr [2024-09-12 09:32:59.348140] #0 >> ---------------------------------
+Dimr [2024-09-12 09:32:59.348142] #0 >>
+Dimr [2024-09-12 09:32:59.348168] #0 >> myNameDFlowFM.Initialize(westerscheldt.mdu)
+** DEBUG  :            0  0.1000010      NOD(KMAX)
+** DEBUG  :            6  0.7000070      XK (KMAX), YK (KMAX), ZK (KMAX), KC (KMAX), NMK (KMAX), RNOD(KMAX)
+ loading model
+** INFO   : DtMax should be <= DtUser. It has been reset to:    20.000
+** WARNING: TimeSplitInterval invalid, disabling time partitioning of output. Got: 0X
+Dimr [2024-09-12 09:32:59.429552] #0 >> kernel: TimeSplitInterval invalid, disabling time partitioning of output. Got: 0X
+** WARNING: While reading 'westerscheldt.mdu': keyword [geometry] layertype=1 was in file, but not used. Check possible typo.
+Dimr [2024-09-12 09:32:59.429684] #0 >> kernel: While reading 'westerscheldt.mdu': keyword [geometry] layertype=1 was in file, but not used. Check possible typo.
+** WARNING: While reading 'westerscheldt.mdu': keyword [geometry] numtopsig=0 was in file, but not used. Check possible typo.
+Dimr [2024-09-12 09:32:59.429698] #0 >> kernel: While reading 'westerscheldt.mdu': keyword [geometry] numtopsig=0 was in file, but not used. Check possible typo.
+** WARNING: While reading 'westerscheldt.mdu': keyword [geometry] sigmagrowthfactor=1. was in file, but not used. Check possible typo.
+Dimr [2024-09-12 09:32:59.429710] #0 >> kernel: While reading 'westerscheldt.mdu': keyword [geometry] sigmagrowthfactor=1. was in file, but not used. Check possible typo.
+** WARNING: While reading 'westerscheldt.mdu': keyword [numerics] qhrelax=1.d-2 was in file, but not used. Check possible typo.
+Dimr [2024-09-12 09:32:59.429729] #0 >> kernel: While reading 'westerscheldt.mdu': keyword [numerics] qhrelax=1.d-2 was in file, but not used. Check possible typo.
+** WARNING: While reading 'westerscheldt.mdu': keyword [numerics] jaorgsethu=1 was in file, but not used. Check possible typo.
+Dimr [2024-09-12 09:32:59.429741] #0 >> kernel: While reading 'westerscheldt.mdu': keyword [numerics] jaorgsethu=1 was in file, but not used. Check possible typo.
+** WARNING: While reading 'westerscheldt.mdu': keyword [physics] effectspiral=0. was in file, but not used. Check possible typo.
+Dimr [2024-09-12 09:32:59.429761] #0 >> kernel: While reading 'westerscheldt.mdu': keyword [physics] effectspiral=0. was in file, but not used. Check possible typo.
+** WARNING: While reading 'westerscheldt.mdu': keyword [wind] gapres=101325.0000000 was in file, but not used. Check possible typo.
+Dimr [2024-09-12 09:32:59.429775] #0 >> kernel: While reading 'westerscheldt.mdu': keyword [wind] gapres=101325.0000000 was in file, but not used. Check possible typo.
+** WARNING: While reading 'westerscheldt.mdu': keyword [waves] wavenikuradse=1.d-2 was in file, but not used. Check possible typo.
+Dimr [2024-09-12 09:32:59.429787] #0 >> kernel: While reading 'westerscheldt.mdu': keyword [waves] wavenikuradse=1.d-2 was in file, but not used. Check possible typo.
+** WARNING: While reading 'westerscheldt.mdu': keyword [output] snapshotdir=figures was in file, but not used. Check possible typo.
+Dimr [2024-09-12 09:32:59.429810] #0 >> kernel: While reading 'westerscheldt.mdu': keyword [output] snapshotdir=figures was in file, but not used. Check possible typo.
+** INFO   : Reading cache file: westerscheldt.cache
+** INFO   : Opened file : obslocations_obs.xyn
+** INFO   : Closed file : obslocations_obs.xyn
+** INFO   : Opened file : crosssections_crs.pli
+** INFO   : Closed file : crosssections_crs.pli
+ model loaded
+ Initializing flow: flow_modelinit
+** INFO   : Initializing flow model geometry...
+** INFO   : nr of netnodes               ( )  :                     8916
+** INFO   : nr of netlinks               ( )  :                    17270
+** INFO   :
+** INFO   : nr of 2D netlinks            ( )  :                    17270
+** INFO   : nr of 1D netlinks            ( )  :                        0
+** INFO   :
+** INFO   : nr of netcells               ( )  :                     8355
+** INFO   : nr of netcells 1D2D          ( )  :                     8355
+** INFO   :
+** INFO   : Opened file : westerscheldt.ext
+** INFO   : Opened file : boundarysea.pli
+** INFO   : Closed file : boundarysea.pli
+** INFO   : boundary: 'boundarysea.pli' opened 38 cells.
+** INFO   : waterlevelbnd boundarysea.pli      38 nr of open bndcells
+** INFO   : Opened file : boundaryriver.pli
+** INFO   : Closed file : boundaryriver.pli
+** INFO   : boundary: 'boundaryriver.pli' opened 7 cells.
+** INFO   : dischargebnd boundaryriver.pli       7 nr of open bndcells
+** INFO   : setbedlevelfromextfile: Using bedlevel as specified in net-file.
+** INFO   : Done initializing flow model geometry.
+proj_create: Cannot find proj.db
+proj_create: unrecognized format / unknown name
+** INFO   : cross sections with kdtree2, elapsed time:      0.0000    s.
+** INFO   : Start initializing external forcings...
+** INFO   : External Forcing or Initialising 'waterlevelbnd' from file 'boundarysea.pli'.
+** INFO   : External Forcing or Initialising 'dischargebnd' from file 'boundaryriver.pli'.
+** INFO   : Closed file : westerscheldt.ext
+** INFO   : Done initializing external forcings.
+** INFO   : nogauss , nocg :           4256          4144
+** INFO   : cross sections with kdtree2, elapsed time:      0.0000    s.
+** INFO   : ** Model initialization was successful **
+** INFO   : * Active Model definition:
+** INFO   : **
+** INFO   : Modelinit finished   at: 09:32:59, 12-09-2024
+** INFO   :
+** INFO   :
+** INFO   : nr of netnodes               ( )  :                     8916
+** INFO   : nr of netlinks               ( )  :                    17270
+** INFO   :
+** INFO   : nr of 2D netlinks            ( )  :                    17270
+** INFO   : nr of 1D netlinks            ( )  :                        0
+** INFO   :
+** INFO   : nr of netcells               ( )  :                     8355
+** INFO   : nr of netcells 1D2D          ( )  :                     8355
+** INFO   :
+** INFO   : nr of flownodes              ( )  :                     8400
+** INFO   : nr of internal flownodes     ( )  :                     8355
+** INFO   : nr of 2D internal flownodes  ( )  :                     8355
+** INFO   : nr of 1D internal flownodes  ( )  :                        0
+** INFO   :
+** INFO   : nr of openbnd cells       ( )     :                       45
+** INFO   : nr of 2D boundaries       ( )     :                       45
+** INFO   : nr of 1D boundaries       ( )     :                        0
+** INFO   : nr of flowlinks           ( )     :                    16069
+** INFO   : nr of internal links      ( )     :                    16024
+** INFO   : nr of 1D links            ( )     :                        0
+** INFO   :
+** INFO   : nr of closed walls     ( )  :                     1200
+** INFO   :
+** INFO   :
+** INFO   : my model area          (m2) :         0.4398049846E+09
+** INFO   : my model volume        (m3) :         0.4860906220E+10
+** INFO   :
+** INFO   :
+** INFO   : Writing initial output to file(s)...
+** INFO   : Done writing initial output to file(s).
+Dimr [2024-09-12 09:32:59.748996] #0 >> myNameDFlowFM.Update(6600.0)
+Dimr [2024-09-12 09:33:06.326570] #0 >> myNameDFlowFM.Finalize()
+** INFO   :
+** INFO   :
+** INFO   :
+** INFO   : extra timer:Flow geometry                                        0.0965709686
+** INFO   : extra timer:Flow init                                            0.0368971825
+** INFO   : extra timer:Remainder                                            0.0827307701
+** INFO   : extra timer:Set boundaries                                       0.0133824348
+** INFO   : extra timer:Sethuau                                              0.2363681793
+** INFO   : extra timer:setdt                                                0.0195021629
+** INFO   : extra timer:Compute advection term                               1.6850221157
+** INFO   : extra timer:Setumod                                              0.3701639175
+** INFO   : extra timer:Set conveyance                                       0.3759925365
+** INFO   : extra timer:Findcells/preparecells                               0.0334630013
+** INFO   : extra timer:Renumber flownodes                                   0.0151340961
+** INFO   : extra timer:step_reduce                                          3.2069873810
+** INFO   : extra timer:Transport                                            0.0904417038
+** INFO   : extra timer:Output                                               0.0151562691
+** INFO   : extra timer:unc_write_his                                        0.0106232166
+** INFO   : extra timer:fill_valobs                                          0.0109457970
+** INFO   :
+** INFO   :
+** INFO   :
+** INFO   : nr of timesteps        ( )  :           564.0000000000
+** INFO   : average timestep       (s)  :            11.6814159292
+** INFO   : nr of setbacks         ( )  :             0.0000000000
+** INFO   :
+** INFO   :
+** INFO   : simulation period      (d)  :             0.0763888889
+** INFO   : total computation time (d)  :             0.0000799890
+** INFO   : time modelinit         (d)  :             0.0000038588
+** INFO   : time steps (+ plots)   (d)  :             0.0000761302
+** INFO   :
+** INFO   : simulation period      (h)  :             1.8333333333
+** INFO   : total computation time (h)  :             0.0019197372
+** INFO   : time modelinit         (h)  :             0.0000926114
+** INFO   : time steps (+ plots)   (h)  :             0.0018271258
+** INFO   :
+** INFO   : simulation period      (s)  :          6600.0000000000
+** INFO   : total computation time (s)  :             6.9110538960
+** INFO   : time modelinit         (s)  :             0.3334009647
+** INFO   : time steps (+ plots)   (s)  :             6.5776529312
+** INFO   :
+** INFO   :
+** INFO   : time iniexternalforc.  (s)  :             0.0092589855
+** INFO   :
+** INFO   : time inistep           (s)  :             3.3342916965
+** INFO   : time setumod           (s)  :             0.3684806824
+** INFO   : time furu              (s)  :             0.1683728695
+** INFO   : time solve             (s)  :             2.7251646519
+** INFO   : time gausselimination  (s)  :             0.1370000000
+** INFO   : time gausssubstitution (s)  :             0.0630000000
+** INFO   : time totalsolve        (s)  :             2.7199999999
+** INFO   : time setexternalforc.  (s)  :             0.0011465549
+** INFO   : time setext.forc.fetch (s)  :             0.0000000000
+** INFO   : time setexternalfbnd.  (s)  :             0.0120048523
+** INFO   : time steps             (s)  :             6.5565457344
+** INFO   : fraction solve/steps   ( )  :             0.4156403024
+** INFO   : total/(dnt*ndx)        (s)  :             0.0000014588
+** INFO   : av nr of cont. it s1it ( )  :             0.0000000000
+** INFO   : time transport         (s)  :             0.0920000000
+** INFO   : time debug            (s)  :             0.0000000000
+** INFO   :
+** INFO   :
+** INFO   :
+** INFO   : Computation started  at: 09:32:59, 12-09-2024
+** INFO   : Computation finished at: 09:33:06, 12-09-2024
+** INFO   :
+** INFO   : simulation period      (h)  :             1.8333333333
+** INFO   : total time in timeloop (h)  :             0.0018271258
+** INFO   : MPI    : no.
+** INFO   : OpenMP : unavailable.
+** INFO   :
+** INFO   :
+** INFO   :
+** INFO   :
+Dimr [2024-09-12 09:33:06.327666] #0 >> TIMER INFO:
+
+Dimr [2024-09-12 09:33:06.327673] #0 >> myNameDFlowFM	: 6.979370 sec
+Dimr [2024-09-12 09:33:06.327677] #0 >> DIMR_LIB	: 8.144777 sec
+Dimr [2024-09-12 09:33:06.327681] #0 >> DIMR_EXE	: 7.192050 sec
+Submitted job: 6363500 Number of partitions: 1

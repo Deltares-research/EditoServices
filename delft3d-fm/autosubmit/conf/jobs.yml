@@ -1,45 +1,8 @@
 JOBS:
-  # These are common tasks that are included in Autosubmit workflows
-  # and executed before the SIM (Simulation) task runs.
-  # You could also have a SYNC/SYNCHRONIZE task that copies code to
-  # the remote platform, for instance.
-  # For the sake of simplicity, this workflow only runs the model.
-  #
-  # LOCAL_SETUP:
-  #   FILE: LOCAL_SETUP.sh
-  #   PLATFORM: LOCAL
-  #   RUNNING: once
-  # REMOTE_SETUP:
-  #   FILE: REMOTE_SETUP.sh
-  #   DEPENDENCIES: LOCAL_SETUP
-  #   WALLCLOCK: 00:05
-  #   RUNNING: once
-  # INI:
-  #   FILE: INI.sh
-  #   DEPENDENCIES: REMOTE_SETUP
-  #   RUNNING: member
-  #   WALLCLOCK: 00:05
-
   SIM:
     FILE: delft3d-fm/src/submit-autosubmit-job.sh
-    WALLCLOCK: 00:05
+    WALLCLOCK: 00:48
     RUNNING: once
-  # This simulation task has no other dependencies, but you could add
-  # some task executed before it runs, or chain one simulation task
-  # with another (common in chunking, used in climate/weather workflows).
-  # e.g.
-  #
-  # DEPENDENCIES: INI SIM-1
-  # RUNNING: chunk
-
-  # This is just an example of how things are chained/connected in
-  # Autosubmit, showing that once SIM finishes, Autosubmit will run
-  # CLEAN, which could, for instance, clean temporary files.
-  CLEAN:
-    FILE: delft3d-fm/src/clean.sh
-    DEPENDENCIES: SIM
-    RUNNING: once
-    WALLCLOCK: 00:05
 
 EXPERIMENT:
   DATELIST: "20000101"
@@ -54,12 +17,9 @@ PLATFORMS:
   MN5:
     TYPE: slurm
     HOST: glogin1.bsc.es
-    PROJECT: bsc32
-    # You need a valid BSC user, in this case from bsc, or adjust
-    # the project above and maybe the scratch dir below if needed.
-    # Write your username replacing <BSC32_USER>.
+    PROJECT: ehpc69
     USER: delt550999
-    QUEUE: gp_debug
+    QUEUE: gp_ehpc
     SCRATCH_DIR: /gpfs/scratch
     ADD_PROJECT_TO_HOST: false
     MAX_WALLCLOCK: 48:00

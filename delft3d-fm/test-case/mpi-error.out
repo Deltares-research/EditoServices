@@ -1,0 +1,62 @@
+unload bsc/1.0 (PATH, MANPATH)
+unload UCX/1.15.0 (PATH, LD_LIBRARY_PATH, LIBRARY_PATH, C_INCLUDE_PATH,
+CPLUS_INCLUDE_PATH)
+remove mkl/2023.2.0 (LD_LIBRARY_PATH)
+remove impi/2021.10.0 (PATH, MANPATH, LD_LIBRARY_PATH)
+load SINGULARITY/3.11.5 (PATH)
+load impi/2021.12 (PATH, MANPATH, LD_LIBRARY_PATH)
+
+Partitioning parallel model...
+Partitioning in folder /home/delt/delt550999/test-case/dflowfm
+----------------------------------------------------------------------
+Executing Apptainer container with:
+Container file                            : /home/delt/delt550999/containers/delft3dfm_2024.03_lnx64_sif1227.sif
+Current   working directory               : /home/delt/delt550999/test-case/dflowfm
+Mounting  source  directory               : /home/delt/delt550999/test-case/dflowfm
+Mounting  target  directory               : /mnt/data
+Container working directory               : /mnt/data
+Executable                                : dflowfm
+Executable options                        : --nodisplay --autostartstop --partition:ndomains=4:icgsolver=6         westerscheldt.mdu
+env PATH                 inside container : /gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/delft3dfm_latest/lnx64/bin
+env LD_LIBRARY_PATH      inside container : /gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/lib:/gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/lib/release:/gpfs/apps/MN5/GPP/ONEAPI/2024.1/mpi/2021.12/libfabric/lib:/usr/local/lib:/usr/lib:/opt/delft3dfm_latest/lnx64/lib
+env HDF5_USE_FILE_LOCKING inside container: FALSE
+
+Executing apptainer exec /opt/delft3dfm_latest/lnx64/bin/dflowfm --nodisplay --autostartstop --partition:ndomains=4:icgsolver=6         westerscheldt.mdu
+list of files in the cwd
+DFM_interpreted_idomain_westerscheldt_net.nc
+boundaryriver.pli
+boundaryriver_0001.cmp
+boundarysea.pli
+boundarysea_0001.cmp
+crosssections_crs.pli
+dflowfmoutput
+obslocations_obs.xyn
+unstruc.dia
+westerscheldt.cache
+westerscheldt.ext
+westerscheldt.mdu
+westerscheldt_0000.mdu
+westerscheldt_0000_net.nc
+westerscheldt_0001.mdu
+westerscheldt_0001_net.nc
+westerscheldt_0002.mdu
+westerscheldt_0002_net.nc
+westerscheldt_0003.mdu
+westerscheldt_0003_net.nc
+westerscheldt_net.nc
+westerscheldt_part.pol
+MPIR_pmi_virtualization(): MPI startup(): PMI calls are forwarded to /host/lib64/libpmi2.so
+[0] MPI startup(): Intel(R) MPI Library, Version 2021.12  Build 20240213 (id: 4f55822)
+[0] MPI startup(): Copyright (C) 2003-2024 Intel Corporation.  All rights reserved.
+[0] MPI startup(): library kind: release
+[0] MPI startup(): libfabric version: 1.18.1-impi
+[0] MPI startup(): libfabric provider: psm3
+[1726055686.733706982] gs22r2b60:rank0.dflowfm: unknown link speed 0x80
+[1726055686.763455079] gs22r2b60:rank0.dflowfm: Failed to modify UD QP to INIT on mlx5_0: Operation not permitted
+Abort(1614735) on node 0 (rank 0 in comm 0): Fatal error in PMPI_Init: Unknown error class, error stack:
+MPIR_Init_thread(192)........:
+MPID_Init(1645)..............:
+MPIDI_OFI_mpi_init_hook(1653):
+create_vni_context(2253).....: OFI endpoint open failed (ofi_init.c:2253:create_vni_context:Invalid argument)
+srun: error: gs22r2b60: task 0: Exited with exit code 1
+srun: Terminating StepId=6190575.0
