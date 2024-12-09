@@ -10,7 +10,8 @@ pip install "dfm_tools>=0.29.0"
 # open notebooks
 # wget https://github.com/Deltares/dfm_tools/raw/main/docs/notebooks/postprocessing_example.ipynb
 wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_postprocess/postprocessing_example.ipynb
-wget "-P" https://github.com/Deltares-research/EditoServices/tree/main/d_eco_impact_postprocess/validation-data/
+wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_postprocess/validation-data/zostera_noltei_2017Polygon_WGS84.shp
+
 # wget https://github.com/Deltares/dfm_tools/raw/main/docs/notebooks/modelbuilder_example.ipynb
 # wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/modelbuilder/upload_model.py
 
