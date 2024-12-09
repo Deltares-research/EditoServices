@@ -10,7 +10,7 @@ pip install "dfm_tools>=0.29.0"
 # open notebooks
 # wget https://github.com/Deltares/dfm_tools/raw/main/docs/notebooks/postprocessing_example.ipynb
 wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_postprocess/postprocessing_example.ipynb
-wget -p https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_postprocess/validation-data/
+wget -p https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_postprocess/validation-data/ 
 
 # wget https://github.com/Deltares/dfm_tools/raw/main/docs/notebooks/modelbuilder_example.ipynb
 # wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/modelbuilder/upload_model.py
