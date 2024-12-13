@@ -4,7 +4,7 @@ version: 0.1.3
 
 input-data:
   - dataset:
-      filename: "DFM_OUTPUT/Vietnam_map.nc" #input data
+      filename: "DFM_OUTPUT/WaddenSea_map.nc" #input data
       variable_mapping:
         mesh2d_waterdepth:                              "Water_Depth" # meters
         mesh2d_sa1:                                        "Salinity" # salinity concentration in PSU
