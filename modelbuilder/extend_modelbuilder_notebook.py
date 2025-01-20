@@ -4,7 +4,6 @@ import os
 import json
 
 file_ipynb = "modelbuilder_example.ipynb"
-file_ipynb = r"c:\DATA\checkouts\dfm_tools\docs\notebooks\modelbuilder_example.ipynb"
 
 with open(file_ipynb) as f:
     ipynb_json = json.load(f)
