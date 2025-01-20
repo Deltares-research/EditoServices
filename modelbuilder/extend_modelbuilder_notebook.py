@@ -4,9 +4,23 @@ import os
 import json
 
 file_ipynb = "modelbuilder_example.ipynb"
+file_ipynb = r"c:\DATA\checkouts\dfm_tools\docs\notebooks\modelbuilder_example.ipynb"
 
 with open(file_ipynb) as f:
     ipynb_json = json.load(f)
+
+# set modeltype to "3D"
+replace_success = False
+for nbcell in ipynb_json["cells"]:
+    for iline, nbline in enumerate(nbcell["source"]):
+        pat = 'modeltype = "2D"'
+        if nbline.startswith(pat):
+            nbline_new = nbline.replace("2D", "3D")
+            nbcell["source"][iline] = nbline_new
+            replace_success = True
+if not replace_success:
+    raise ValueError(f"pattern {pat} not found in notebook, could not replace")
+
 
 edito_header = {
    "cell_type": "markdown",
@@ -14,34 +28,6 @@ edito_header = {
    "metadata": {},
    "source": [
     "## Extra cells added for EDITO platform"
-   ]
-  }
-
-mdu_header = {
-   "cell_type": "markdown",
-   # "id": "cf77ed64",
-   "metadata": {},
-   "source": [
-    "### Correct an incorrect mdu default"
-   ]
-  }
-
-mdu_code = {
-   "cell_type": "code",
-   # "execution_count": 19,
-   # "id": "25bcaec2",
-   "metadata": {},
-   "source": [
-    "# replace stretchtype in mdu to support old FM version in docker container until https://github.com/Deltares/HYDROLIB-core/issues/691 is fixed\n",
-    "mdu.geometry.stretchtype = 0\n",
-    "\n",
-    "# add salinity and temperature processes\n",
-    "mdu.physics.temperature = 5\n",
-    "mdu.physics.salinity = 1\n",
-    "mdu.physics.initialsalinity = 25.0\n",   
-    "\n",
-    "mdu.save(mdu_file) # ,path_style=path_style)\n",
-    "dfmt.make_paths_relative(mdu_file)\n"
    ]
   }
 
@@ -89,8 +75,6 @@ upload_code = {
   }
 
 ipynb_json["cells"].append(edito_header)
-ipynb_json["cells"].append(mdu_header)
-ipynb_json["cells"].append(mdu_code)
 ipynb_json["cells"].append(docker_header)
 ipynb_json["cells"].append(docker_code)
 ipynb_json["cells"].append(upload_header)
