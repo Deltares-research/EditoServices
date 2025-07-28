@@ -1,32 +1,45 @@
 #!/bin/bash
 
-# kill process if anything fails
+# Exit immediately if a command exits with a non-zero status
 set -e
 
-# we require dfm_tools>=0.29.0 since it works with new CDS
-pip install "dfm_tools>=0.29.0"
-# pip install git+https://github.com/deltares/dfm_tools
+# Load conda/miniforge environment
+module load miniforge
 
-# open notebook
-wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_postprocess/postprocessing_example.ipynb
-wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/d_eco_impact_postprocess/upload_plots.py
+# Initialize conda shell functionality
+conda init
 
-# open validation data
-#wget wget -p --convert-links -nH -nd -Pvalidation-data https://github.com/Felix-Deltares/EditoServices/raw/0d19ccdb5733f76fcb663c7cc5297135ce2a09e6/d_eco_impact_postprocess/validation-data/zostera_noltei_2017Polygon_WGS84.shp
-wget -p --convert-links -nH -nd -Pvalidation-data https://github.com/Deltares-research/EditoServices/raw/refs/heads/main/d_eco_impact_postprocess/validation-data/zostera_noltei_2017Polygon_WGS84.cpg
-wget -p --convert-links -nH -nd -Pvalidation-data https://github.com/Deltares-research/EditoServices/raw/refs/heads/main/d_eco_impact_postprocess/validation-data/zostera_noltei_2017Polygon_WGS84.dbf
-wget -p --convert-links -nH -nd -Pvalidation-data https://github.com/Deltares-research/EditoServices/raw/refs/heads/main/d_eco_impact_postprocess/validation-data/zostera_noltei_2017Polygon_WGS84.prj
-wget -p --convert-links -nH -nd -Pvalidation-data https://github.com/Deltares-research/EditoServices/raw/refs/heads/main/d_eco_impact_postprocess/validation-data/zostera_noltei_2017Polygon_WGS84.qmd
-wget -p --convert-links -nH -nd -Pvalidation-data https://github.com/Deltares-research/EditoServices/raw/refs/heads/main/d_eco_impact_postprocess/validation-data/zostera_noltei_2017Polygon_WGS84.shp
-wget -p --convert-links -nH -nd -Pvalidation-data https://github.com/Deltares-research/EditoServices/raw/refs/heads/main/d_eco_impact_postprocess/validation-data/zostera_noltei_2017Polygon_WGS84.shx
+# Create and activate the environment
+conda create -y --name sfincs_vegetation
+source activate sfincs_vegetation
 
+# Install mamba for faster dependency resolution
+conda install -y -c conda-forge mamba
 
-# clear output
-jupyter nbconvert --clear-output --inplace postprocessing_example.ipynb
+# Install required Python packages
+mamba install -y -c conda-forge \
+  python=3.10.13 \
+  hydromt_sfincs=1.0.2 \
+  hydromt=0.8.0 \
+  rasterio=1.3.7 \
+  geopandas=0.14.1 \
+  pandas=2.1.3 \
+  xarray=2023.11.0 \
+  proj=9.2.0 \
+  pyproj=3.6.0 \
+  numpy=1.26.0 \
+  gdal=3.6.4
 
-# extend modelbuilder notebook, creates modelbuilder_example_edito.ipynb
-# wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/modelbuilder/extend_modelbuilder_notebook.py
-# python extend_modelbuilder_notebook.py
-# remove redundant files
-# rm modelbuilder_example.ipynb
-# rm extend_modelbuilder_notebook.py
+# Download notebook and helper script
+wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/01_Model_setup.ipynb
+wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/upload_model.py
+
+# # Download input data
+# mkdir -p input-data
+# cd input-data
+# wget -nc https://github.com/Deltares-research/EditoServices/raw/refs/heads/main/nbs_sfincs/input-data/zostera_noltei_2017Polygon_WGS84.{cpg,dbf,prj,qmd,shp,shx}
+# cd ..
+
+# Clear notebook output
+jupyter nbconvert --clear-output --inplace 01_Model_setup.ipynb
+
