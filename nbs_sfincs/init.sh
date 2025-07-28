@@ -19,7 +19,7 @@ pip install \
   proj==9.2.0 \
   pyproj==3.6.0 \
   numpy==1.26.0 \
-  GDAL==3.6.4
+  # GDAL==3.6.4
 
 # Download notebook and helper script
 wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/01_Model_setup.ipynb
