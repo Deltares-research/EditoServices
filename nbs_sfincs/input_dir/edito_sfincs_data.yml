@@ -1,0 +1,141 @@
+meta:
+  root: p:/11209182-edito/06-Models/SFINCS_nbs_example/01_data
+  version: 2024.4
+
+    
+emodnet_bathymetry:
+   alias: emodnet_bathymetry_v2022
+emodnet_bathymetry_v2022:
+  crs: 4326
+  data_type: RasterDataset
+  driver: raster
+  meta:
+    category: topography
+    paper_doi: 
+    paper_ref: 
+    source_license: Creative Commons Attribution 4.0 International
+    source_url: https://emodnet.ec.europa.eu/en/bathymetry
+    source_version: 2022
+    unit: m+MSL
+  path: topography/02_bathymetry/europe/emodnet/emodnet.vrt
+
+saltmarsh_worthington:
+   alias: saltmarsh_v2023
+saltmarsh_v2023:
+   crs: 4326
+   data_type: RasterDataset
+   driver: raster
+   meta:
+     category: vegetation
+     paper_doi: 
+     paper_ref: 
+     source_license: personal transfer from Thomas Worthington
+     source_url:
+     source_version: 2023
+     unit: 
+   path: vegetation_maps/saltmarshes/worthington/saltmarsh_worthington.vrt
+  
+gmw2020_raster:
+   alias: gmw2020_raster
+gmw2020_raster:
+   crs: 4326
+   data_type: RasterDataset
+   driver: raster
+   meta:
+     category: vegetation
+     paper_doi: https://doi.org/10.3390/rs14153657
+     paper_ref: Bunting et al. (2022)
+     source_license: CC BY 4.0
+     source_url: https://doi.org/10.5281/ zenodo.6894273
+     source_version: 2022
+     unit: 
+   path: vegetation_maps/mangroves/GMW/2020/gmw_v3_2020.vrt
+
+
+slr_srocc_ar5_2055_rcp45:
+  crs: 4326
+  data_type: GeoDataset
+  driver: netcdf
+  meta:
+     category: hydrodynamics
+     paper_doi: https://doi.org/10.1017/9781009157964.006
+     paper_ref: Oppenheimer et al., 2019
+     source_license:
+     source_url:
+     source_version:
+     unit: m+MSL
+  path: slr/rsl_45_2055.nc
+
+slr_srocc_ar5_2100_rcp45:
+  crs: 4326
+  data_type: GeoDataset
+  driver: netcdf
+  meta:
+     category: hydrodynamics
+     paper_doi: https://doi.org/10.1017/9781009157964.006
+     paper_ref: Oppenheimer et al., 2019
+     source_license:
+     source_url:
+     source_version:
+     unit: m+MSL
+  path: slr/rsl_45_2090.nc
+
+slr_srocc_ar5_2100_rcp85:
+  crs: 4326
+  data_type: GeoDataset
+  driver: netcdf
+  meta:
+     category: hydrodynamics
+     paper_doi: https://doi.org/10.1017/9781009157964.006
+     paper_ref: Oppenheimer et al., 2019
+     source_license:
+     source_url:
+     source_version:
+     unit: m+MSL
+  path: slr/rsl_85_2090.nc
+
+slr_srocc_ar6_2100_rcp26:
+  crs: 4326
+  data_type: GeoDataFrame
+  driver: vector
+  meta:
+     category: hydrodynamics
+     paper_doi: doi 10.1017/9781009157896.011.
+     paper_ref: Fox-Kemper et al., 2021
+     source_license:
+     source_url:
+     source_version:
+     unit: m+MSL
+  path: slr/Fig9-28c_data_rcp26.gpkg
+
+slr_srocc_ar6_2100_rcp45:
+  crs: 4326
+  data_type: GeoDataFrame
+  driver: vector
+  meta:
+     category: hydrodynamics
+     paper_doi: doi 10.1017/9781009157896.011.
+     paper_ref: Fox-Kemper et al., 2021
+     source_license:
+     source_url:
+     source_version:
+     unit: m+MSL
+  path: slr/Fig9-28c_data_rcp45.gpkg
+
+slr_srocc_ar6_2100_rcp85:
+  crs: 4326
+  data_type: GeoDataFrame
+  driver: vector
+  meta:
+     category: hydrodynamics
+     paper_doi: doi 10.1017/9781009157896.011.
+     paper_ref: Fox-Kemper et al., 2021
+     source_license:
+     source_url:
+     source_version:
+     unit: m+MSL
+  path: slr/Fig9-28e_data_rcp85.gpkg
+ 
+  
+
+  
