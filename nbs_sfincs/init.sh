@@ -7,10 +7,10 @@ set -e
 # python3 -m venv sfincs_env
 # source sfincs_env/bin/activate
 
-export GDAL_VERSION=3.6.4
-
-# Install Python packages via pip
+# Upgrade pip
 pip install --upgrade pip
+
+# Install packages (GDAL comes bundled via other packages like rasterio/pyproj)
 pip install \
   hydromt-sfincs==1.0.2 \
   hydromt==0.8.0 \
@@ -18,21 +18,15 @@ pip install \
   geopandas==0.14.1 \
   pandas==2.1.3 \
   xarray==2023.11.0 \
-  proj==9.2.0 \
   pyproj==3.6.0 \
-  numpy==1.26.0 \
-  GDAL==3.6.4
+  numpy==1.26.0
 
-# Download notebook and helper script
-wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/01_Model_setup.ipynb
-wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/upload_model.py
+# Check GDAL version (should be available via rasterio or pyproj)
+python -c "import rasterio; print('Rasterio uses GDAL version:', rasterio.__gdal_version__)"
 
-# # Download input data
-# mkdir -p input-data
-# cd input-data
-# wget -nc https://github.com/Deltares-research/EditoServices/raw/refs/heads/main/nbs_sfincs/input-data/zostera_noltei_2017Polygon_WGS84.{cpg,dbf,prj,qmd,shp,shx}
-# cd ..
+# # Download notebook and helper script
+# wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/01_Model_setup.ipynb
+# wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/upload_model.py
 
 # Clear notebook output
 jupyter nbconvert --clear-output --inplace 01_Model_setup.ipynb
-
