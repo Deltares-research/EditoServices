@@ -7,6 +7,8 @@ set -e
 # python3 -m venv sfincs_env
 # source sfincs_env/bin/activate
 
+export GDAL_VERSION=3.6.4
+
 # Upgrade pip
 pip install --upgrade pip
 
@@ -19,10 +21,8 @@ pip install \
   pandas==2.1.3 \
   xarray==2023.11.0 \
   pyproj==3.6.0 \
-  numpy==1.26.0
-
-# Check GDAL version (should be available via rasterio or pyproj)
-python -c "import rasterio; print('Rasterio uses GDAL version:', rasterio.__gdal_version__)"
+  numpy==1.26.0 \
+  GDAL==3.6.4
 
 # # Download notebook and helper script
 # wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/01_Model_setup.ipynb
