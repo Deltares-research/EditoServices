@@ -1,32 +1,69 @@
 #!/bin/bash
+set -e  # Exit on any error
 
-# Exit immediately if a command exits with a non-zero status
-set -e
+### === Install Miniforge (user-local) ===
+MINIFORGE=Miniforge3-Linux-x86_64.sh
+INSTALL_DIR=$HOME/miniforge3
 
-# OPTIONAL: create and activate a virtual environment
-# python3 -m venv sfincs_env
-# source sfincs_env/bin/activate
+echo "🔧 Installing Miniforge..."
+wget https://github.com/conda-forge/miniforge/releases/latest/download/$MINIFORGE -O $MINIFORGE
+bash $MINIFORGE -b -p $INSTALL_DIR
+rm $MINIFORGE
 
-export GDAL_VERSION=3.6.4
+# Enable conda commands in this shell
+source $INSTALL_DIR/etc/profile.d/conda.sh
 
-# Upgrade pip
-pip install --upgrade pip
+### === Create and activate environment ===
+echo "🧪 Creating conda environment 'sfincs_vegetation'..."
+conda create -y -n sfincs_vegetation python=3.10.13
+conda activate sfincs_vegetation
 
-# Install packages (GDAL comes bundled via other packages like rasterio/pyproj)
-pip install \
-  hydromt-sfincs==1.0.2 \
-  hydromt==0.8.0 \
-  rasterio==1.3.7 \
-  geopandas==0.14.1 \
-  pandas==2.1.3 \
-  xarray==2023.11.0 \
-  pyproj==3.6.0 \
-  numpy==1.26.0 \
-  GDAL==3.6.4
+# Install mamba
+conda install -y -c conda-forge mamba
 
-# # Download notebook and helper script
-# wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/01_Model_setup.ipynb
-# wget https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/upload_model.py
+### === Install exact packages ===
+echo "📦 Installing required packages..."
+mamba install -y -c conda-forge \
+  hydromt_sfincs=1.0.2 \
+  hydromt=0.8.0 \
+  rasterio=1.3.7 \
+  geopandas=0.14.1 \
+  pandas=2.1.3 \
+  xarray=2023.11.0 \
+  proj=9.2.0 \
+  pyproj=3.6.0 \
+  numpy=1.26.0 \
+  gdal=3.6.4 \
+  ipykernel jupyter nbformat nbconvert
 
-# Clear notebook output
+### === Register kernel for Jupyter ===
+echo "🔗 Registering Jupyter kernel..."
+python -m ipykernel install --user --name sfincs_vegetation --display-name "Python (sfincs_vegetation)"
+
+### === Download notebook and helper script ===
+echo "📥 Downloading notebook and script..."
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/01_Model_setup.ipynb
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/upload_model.py
+
+### === Embed kernel metadata ===
+echo "⚙️ Embedding kernel metadata into notebook..."
+python - <<EOF
+import nbformat
+
+nb_path = "01_Model_setup.ipynb"
+nb = nbformat.read(open(nb_path), as_version=nbformat.NO_CONVERT)
+
+nb["metadata"]["kernelspec"] = {
+    "name": "sfincs_vegetation",
+    "display_name": "Python (sfincs_vegetation)",
+    "language": "python"
+}
+
+nbformat.write(nb, open(nb_path, "w"))
+EOF
+
+### === Clear notebook output ===
+echo "🧼 Clearing cell outputs..."
 jupyter nbconvert --clear-output --inplace 01_Model_setup.ipynb
+
+echo "✅ Setup complete. You can now open 01_Model_setup.ipynb and it will use the 'sfincs_vegetation' kernel by default."
