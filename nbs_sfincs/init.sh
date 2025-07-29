@@ -44,6 +44,7 @@ python -m ipykernel install --user --name sfincs_vegetation --display-name "Pyth
 echo "📥 Downloading notebook and script..."
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/01_Model_setup.ipynb
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/upload_model.py
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/run_sfincs_process.py
 
 ### === Embed kernel metadata ===
 echo "⚙️ Embedding kernel metadata into notebook..."
