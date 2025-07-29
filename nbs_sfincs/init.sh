@@ -67,3 +67,29 @@ echo "🧼 Clearing cell outputs..."
 jupyter nbconvert --clear-output --inplace 01_Model_setup.ipynb
 
 echo "✅ Setup complete. You can now open 01_Model_setup.ipynb and it will use the 'sfincs_vegetation' kernel by default."
+
+### === Download input ===
+# Make folder
+mkdir -p input_dir
+cd input_dir
+
+# Base path to raw files on GitHub
+BASE_URL="https://github.com/Deltares-research/EditoServices/raw/main/nbs_sfincs/input_dir"
+
+# List of files to download
+FILES=(
+  da_veg.tif
+  delta_dtm_gebco_ref_msl.tif
+  domain.gpkg
+  domain_lines.gpkg
+  edito_sfincs_data.yml
+  wl_ts.nc
+)
+
+# Download each file
+for file in "${FILES[@]}"; do
+  echo "Downloading $file..."
+  wget -nc "$BASE_URL/$file"
+done
+
+cd ..
