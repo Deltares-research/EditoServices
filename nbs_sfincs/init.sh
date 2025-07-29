@@ -34,7 +34,7 @@ mamba install -y -c conda-forge \
   pyproj=3.6.0 \
   numpy=1.26.0 \
   gdal=3.6.4 \
-  ipykernel jupyter nbformat nbconvert s3fs
+  ipykernel jupyter nbformat nbconvert s3fs boto3
 
 ### === Register kernel for Jupyter ===
 echo "🔗 Registering Jupyter kernel..."
