@@ -1,7 +1,7 @@
 import os
 import s3fs
 
-def upload_model_to_s3_bucket(dir_model):
+def upload_model_to_s3_bucket(dir_model, dir_model_folder_s3):
     # Check local model directory exists
     if not os.path.exists(dir_model):
         raise FileNotFoundError(f"The folder {dir_model} does not exist.")
@@ -11,7 +11,7 @@ def upload_model_to_s3_bucket(dir_model):
     S3_ENDPOINT_URL = os.environ["S3_ENDPOINT"]
     onyxia_user_name = os.environ["GIT_USER_NAME"]
     bucket_name = f"oidc-{onyxia_user_name}"
-    dir_model_s3 = f"{bucket_name}/SFINCS_INPUT"
+    dir_model_s3 = f"{bucket_name}/{dir_model_folder_s3}"
 
     # Init S3FS
     fs = s3fs.S3FileSystem(client_kwargs={"endpoint_url": S3_ENDPOINT_URL})

@@ -34,7 +34,7 @@ mamba install -y -c conda-forge \
   pyproj=3.6.0 \
   numpy=1.26.0 \
   gdal=3.6.4 \
-  ipykernel jupyter nbformat nbconvert s3fs
+  ipykernel jupyter nbformat nbconvert s3fs cartopy
 
 ### === Register kernel for Jupyter ===
 echo "🔗 Registering Jupyter kernel..."
@@ -44,6 +44,8 @@ python -m ipykernel install --user --name sfincs_vegetation --display-name "Pyth
 echo "📥 Downloading notebook and script..."
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/main.ipynb
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/upload_model.py
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/download_from_s3.py
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/launch_sfincs_process.py
 
 ### === Embed kernel metadata ===
 echo "⚙️ Embedding kernel metadata into notebook..."
