@@ -21,7 +21,10 @@ def upload_model_to_s3_bucket(dir_model):
         print(f"Removing existing folder '{dir_model_s3}' on S3 (if present)...")
         all_files = fs.find(dir_model_s3)
         for f in all_files:
-            fs.rm(f)
+            try:
+                fs.rm_file(f)  # <-- this avoids triggering delete_objects
+            except Exception as e:
+                print(f"Warning: failed to delete {f}: {e}")
 
     # Upload model files
     list_files = sorted([
