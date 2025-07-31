@@ -42,7 +42,7 @@ python -m ipykernel install --user --name sfincs_vegetation --display-name "Pyth
 
 ### === Download notebook and helper script ===
 echo "📥 Downloading notebook and script..."
-wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/01_Model_setup.ipynb
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/main.ipynb
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/upload_model.py
 
 ### === Embed kernel metadata ===
@@ -50,7 +50,7 @@ echo "⚙️ Embedding kernel metadata into notebook..."
 python - <<EOF
 import nbformat
 
-nb_path = "01_Model_setup.ipynb"
+nb_path = "main.ipynb"
 nb = nbformat.read(open(nb_path), as_version=nbformat.NO_CONVERT)
 
 nb["metadata"]["kernelspec"] = {
@@ -64,9 +64,9 @@ EOF
 
 ### === Clear notebook output ===
 echo "🧼 Clearing cell outputs..."
-jupyter nbconvert --clear-output --inplace 01_Model_setup.ipynb
+jupyter nbconvert --clear-output --inplace main.ipynb
 
-echo "✅ Setup complete. You can now open 01_Model_setup.ipynb and it will use the 'sfincs_vegetation' kernel by default."
+echo "✅ Setup complete. You can now open main.ipynb and it will use the 'sfincs_vegetation' kernel by default."
 
 ### === Download input ===
 # Make folder
