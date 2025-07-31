@@ -18,3 +18,5 @@ def make_movie_from_pngs(folder, fps=4):
     
     ani = animation.FuncAnimation(fig, update, frames=len(images), interval=200, blit=False)
     ani.save(join(folder, 'output_movie.mp4'), writer='ffmpeg', fps=fps, dpi=300)
+
+    plt.close(fig)  # ✅ Prevents unwanted figure display in notebook
