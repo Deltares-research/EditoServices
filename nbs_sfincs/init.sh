@@ -46,6 +46,9 @@ wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/n
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/upload_model.py
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/download_from_s3.py
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/launch_sfincs_process.py
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/movie_utils.py
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/plot_utils.py
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/sfincs_utils.py
 
 ### === Embed kernel metadata ===
 echo "⚙️ Embedding kernel metadata into notebook..."
