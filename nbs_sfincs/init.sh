@@ -89,6 +89,7 @@ FILES=(
   domain_lines.gpkg
   edito_sfincs_data.yml
   wl_ts.nc
+  gswo.tif
 )
 
 # Download each file
