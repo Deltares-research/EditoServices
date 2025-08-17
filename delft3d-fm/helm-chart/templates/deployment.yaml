@@ -17,12 +17,12 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       imagePullSecrets:
-        - name: {{ include "singularity-chart.fullname" . }}-registry
+        - name: {{ include "singularity-chart.fullname" . }}-dockerconfig
       restartPolicy: Always
       volumes:
         - name: docker-config
           secret:
-            secretName: {{ include "singularity-chart.fullname" . }}-registry
+            secretName: {{ include "singularity-chart.fullname" . }}-dockerconfig
             items:
               - key: .dockerconfigjson
                 path: config.json
