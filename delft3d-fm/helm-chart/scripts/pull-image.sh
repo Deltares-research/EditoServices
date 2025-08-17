@@ -31,16 +31,16 @@
 #
 # Examples
 # - Minimal (uses defaults):
-#     ./01-pull-container.sh
+#     ./pull-image.sh
 #
 # - Specify tag and output file:
-#     TAG=release-2025.03 SIF_FILE=dhydro-2025.03.sif ./01-pull-container.sh
+#     TAG=release-2025.03 SIF_FILE=dhydro-2025.03.sif ./pull-image.sh
 #
 # - Provide credentials via HARBOR_*:
-#     HARBOR_USER=alice HARBOR_PASS=secret ./01-pull-container.sh
+#     HARBOR_USER=alice HARBOR_PASS=secret ./pull-image.sh
 #
 # - Without Docker, using Apptainer env vars:
-#     APPTAINER_DOCKER_USERNAME=alice APPTAINER_DOCKER_PASSWORD=secret ./01-pull-container.sh
+#     APPTAINER_DOCKER_USERNAME=alice APPTAINER_DOCKER_PASSWORD=secret ./pull-image.sh
 #
 # Notes
 # - If Docker is installed and HARBOR_* are set, the script runs:
