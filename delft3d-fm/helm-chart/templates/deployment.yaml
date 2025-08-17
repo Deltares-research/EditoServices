@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "singularity-chart.fullname" . }}
+  labels:
+    {{- include "singularity-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "singularity-chart.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "singularity-chart.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ include "singularity-chart.fullname" . }}-registry
+      restartPolicy: Always
+      volumes:
+        - name: docker-config
+          secret:
+            secretName: {{ include "singularity-chart.fullname" . }}-registry
+            items:
+              - key: .dockerconfigjson
+                path: config.json
+      containers:
+        - name: runner
+          image: {{ .Values.runnerImage }}
+          volumeMounts:
+            - name: docker-config
+              mountPath: /root/.docker/
+              readOnly: true
+          command: ["{{ .Values.shell }}", "-eu", "-c"]
+          {{- $imageBase := regexReplaceAll "(^.*/)" .Values.registry.repository "" }}
+          {{- $tagSanitized := replace (replace .Values.registry.tag "/" "_" ) ":" "-" }}
+          {{- $defaultSif := printf "%s_%s.sif" $imageBase $tagSanitized }}
+          {{- $sifFile := default $defaultSif .Values.singularity.sifFile }}
+          args:
+            - |
+              echo "Pulling SIF…";
+              apptainer pull /tmp/{{ $sifFile }} docker://{{ .Values.registry.server }}/{{ .Values.registry.repository }}:{{ .Values.registry.tag }};
+              echo "Running SIF ({{ $sifFile }})…";
+              apptainer run {{ .Values.singularity.runArgs }} /tmp/{{ $sifFile }};
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
