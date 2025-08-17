@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "singularity-chart.fullname" . }}
+  name: {{ include "delft3d-chart.fullname" . }}
   labels:
-    {{- include "singularity-chart.labels" . | nindent 4 }}
+    {{- include "delft3d-chart.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "singularity-chart.name" . }}
+      app.kubernetes.io/name: {{ include "delft3d-chart.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "singularity-chart.name" . }}
+        app.kubernetes.io/name: {{ include "delft3d-chart.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       imagePullSecrets:
-        - name: {{ include "singularity-chart.fullname" . }}-dockerconfig
+        - name: {{ include "delft3d-chart.fullname" . }}-dockerconfig
       restartPolicy: Always
       volumes:
         - name: docker-config
           secret:
-            secretName: {{ include "singularity-chart.fullname" . }}-dockerconfig
+            secretName: {{ include "delft3d-chart.fullname" . }}-dockerconfig
             items:
               - key: .dockerconfigjson
                 path: config.json

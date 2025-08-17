@@ -1,8 +1,8 @@
-{{- define "singularity-chart.name" -}}
+{{- define "delft3d-chart.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "singularity-chart.fullname" -}}
+{{- define "delft3d-chart.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -11,8 +11,8 @@
 {{- end -}}
 {{- end -}}
 
-{{- define "singularity-chart.labels" -}}
-app.kubernetes.io/name: {{ include "singularity-chart.name" . }}
+{{- define "delft3d-chart.labels" -}}
+app.kubernetes.io/name: {{ include "delft3d-chart.name" . }}
 helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
