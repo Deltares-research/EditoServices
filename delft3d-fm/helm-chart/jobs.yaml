@@ -1,7 +1,8 @@
 # container workflow
 JOBS:
   SIM:
-    FILE: delft3d-fm/src/02-submit-autosubmit-job.sh
+    #Point FILE to the mounted path inside the pod to match the autosubmit ConfigMap mount
+    FILE: /autosubmit/submit-autosubmit-job.sh
     WALLCLOCK: 00:48
     RUNNING: once
 

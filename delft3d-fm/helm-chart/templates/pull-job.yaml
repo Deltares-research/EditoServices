@@ -109,5 +109,7 @@ metadata:
   labels:
     {{- include "delft3d-chart.labels" . | nindent 4 }}
 data:
-  jobs.yml: |-
-{{- .Files.Get "jobs.yml" | nindent 4 }}
+  jobs.yaml: |-
+{{- .Files.Get "jobs.yaml" | nindent 4 }}
+  submit-autosubmit-job.sh: |-
+{{- .Files.Get "scripts/submit-autosubmit-job.sh" | nindent 4 }}
