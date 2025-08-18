@@ -22,12 +22,9 @@ export I_MPI_DEBUG=5
 
 # Set the Hydra bootstrap server.
 export I_MPI_HYDRA_BOOTSTRAP=slurm
-
 # Make Intel MPI use slurm's PMI Library (optional).
 export I_MPI_PMI_LIBRARY=/host/lib64/libpmi2.so
 
-#
-#
 # --- You shouldn't need to change the lines below ------------------------
 
 function print_usage_info {
@@ -50,14 +47,18 @@ function print_usage_info {
 }
 
 # Variables. Will be overwritten.
-container_folder=${PWD} # The directory that contains the apptainer container
-model_folder=${PWD} # The directory that contains the model. This will be bound to the container.
+# The directory that contains the apptainer container
+container_folder=${PWD}
+# The directory that contains the model. This will be bound to the container.
+model_folder=${PWD}
 
 executable=
 executable_opts=
 
-container_bindir=/opt/delft3dfm_latest/lnx64/bin # The directory WITHIN the container that contains the executables
-container_libdir=/opt/delft3dfm_latest/lnx64/lib # The directory WITHIN the container that contains the libraries
+# The directory WITHIN the container that contains the executables
+container_bindir=/opt/delft3dfm_latest/lnx64/bin
+# The directory WITHIN the container that contains the libraries
+container_libdir=/opt/delft3dfm_latest/lnx64/lib
 
 container_PATH=$MPI_DIR/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:$container_bindir
 container_LD_LIBRARY_PATH=$MPI_DIR/lib:$MPI_DIR/lib/release:$MPI_DIR/libfabric/lib:/usr/local/lib:/usr/lib:$container_libdir
@@ -102,7 +103,7 @@ shopt -s nullglob
 if [[ "$container_folder" == *.sif ]]; then
     container_file_path="$container_folder"
 else
-  container_file_paths=($(ls $container_folder/*.sif))
+  container_file_paths=($(ls "$container_folder"/*.sif))
   container_file_path=
 
   if [ ${#container_file_paths[@]} -eq 1 ]; then
@@ -117,8 +118,9 @@ shopt -u nullglob
 # Set container properties
 # Handle relative paths in the submit script.
 currentFolder=${PWD}
-cd $model_folder
+cd "$model_folder"
 model_folder=${PWD}
+# shellcheck disable=SC2086
 cd $currentFolder
 
 current_working_dir=$(pwd)
@@ -145,23 +147,21 @@ echo "env HDF5_USE_FILE_LOCKING inside container: $HDF5_USE_FILE_LOCKING"
 echo
 echo "Executing apptainer exec $container_bindir/$executable $executable_opts"
 
-#
-#
-# --- Execution part: modify if needed ------------------------------------ 
 
+# --- Execution part: modify if needed ------------------------------------
 # Optionally use --cleanenv to prevent the user's environment from being passed to the container.
 # Be careful with it: the IntelMPI setup uses multiple environment settings.
 # --cleanenv will probably not work for multiple node computations.
 # See also https://apptainer.org/docs/user/latest/environment_and_metadata.html
-#
+
 echo "list of files in the cwd"
 echo -e "$(ls)"
 
 singularity exec \
-                 --bind $model_folder:$mountdir,$MPI_DIR:$MPI_DIR,/usr/:/host,/usr/lib64/:/host/lib64 \
-                 --pwd $container_working_dir \
+                 --bind "$model_folder":$mountdir,"$MPI_DIR":"$MPI_DIR",/usr/:/host,/usr/lib64/:/host/lib64 \
+                 --pwd "$container_working_dir" \
                  --no-home \
-                 --env HDF5_USE_FILE_LOCKING=$HDF5_USE_FILE_LOCKING \
-                 --env PATH=$container_PATH \
-                 --env LD_LIBRARY_PATH=$container_LD_LIBRARY_PATH \
-                 $container_file_path $container_bindir/$executable $executable_opts
+                 --env HDF5_USE_FILE_LOCKING="$HDF5_USE_FILE_LOCKING" \
+                 --env PATH="$container_PATH" \
+                 --env LD_LIBRARY_PATH="$container_LD_LIBRARY_PATH" \
+                 "$container_file_path" $container_bindir/"$executable" "$executable_opts"
