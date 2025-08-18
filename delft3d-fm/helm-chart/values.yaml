@@ -4,6 +4,10 @@ nodeSelector: {}
 affinity: {}
 tolerations: []
 
+autosubmit:
+  enabled: false
+  mountPath: /autosubmit
+
 registry:
   server: containers.deltares.nl           # OCI registry hostname (no scheme)
   repository: delft3d/dhydro               # repo / image path
