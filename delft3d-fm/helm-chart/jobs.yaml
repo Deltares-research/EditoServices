@@ -1,6 +1,7 @@
+# container workflow
 JOBS:
   SIM:
-    FILE: delft3d-fm/src/submit-autosubmit-job.sh
+    FILE: delft3d-fm/src/02-submit-autosubmit-job.sh
     WALLCLOCK: 00:48
     RUNNING: once
 
