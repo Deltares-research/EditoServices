@@ -113,3 +113,5 @@ data:
 {{- .Files.Get "jobs.yaml" | nindent 4 }}
   submit-autosubmit-job.sh: |-
 {{- .Files.Get "scripts/submit-autosubmit-job.sh" | nindent 4 }}
+  trigger-container.sh: |-
+{{- .Files.Get "scripts/trigger-container.sh" | nindent 4 }}
