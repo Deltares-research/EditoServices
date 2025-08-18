@@ -5,12 +5,13 @@ executable_opts=dimr_config.xml
 SLURM_NTASKS=1
 
 echo "Current working directory: ${PWD}"
-cd "/home/delt/$USER/from-edito"
-echo "Current working directory: ${PWD}"
-# this path should be the same as the one in the submit-slurm-job.sh script
-# the user name "delt550999" should be changed to the one of the user
-# the name "delt" should be changed to the one of the user
-model_dir="/home/delt/$USER/from-edito"
+# Optionally switch to a model directory provided via env
+if [ -n "${MODEL_DIR:-}" ]; then
+  cd "${MODEL_DIR}"
+  echo "Switched to model directory: ${PWD}"
+fi
+# Determine model root directory (defaults to current working directory)
+model_dir="${MODEL_DIR:-${PWD}}"
 # The name of the DIMR configuration file. The default name is dimr_config.xml. This file must already exist!
 
 # Setup the model
@@ -20,9 +21,11 @@ model_dir="/home/delt/$USER/from-edito"
 # │   ├── model.mdu
 # │   └── ...
 # └── dimr_config.xml
-# Setup the container
-RDIR="/gpfs/projects/ehpc69/containers/delft3d-fm"
-CONTAINER_PATH="$RDIR/delft3dfm_2024.03_lnx64_sif1227.sif"
+# Setup the container location
+# Directory where the SIF image is expected; Job typically pulls into /work. Override via SIF_DIR if needed.
+SIF_DIR="${SIF_DIR:-/work}"
+# Allow overriding the SIF path directly via CONTAINER_PATH; by default, point to SIF_DIR (helper will auto-detect *.sif)
+CONTAINER_PATH="${CONTAINER_PATH:-$SIF_DIR}"
 # Use the helper script packaged with the chart; resolve relative to this script's directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 SCRIPT_PATH="$SCRIPT_DIR/trigger-container.sh"
