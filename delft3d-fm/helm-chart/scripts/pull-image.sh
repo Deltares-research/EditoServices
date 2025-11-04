@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # -----------------------------------------------------------------------------
 # Purpose
 #   Pull an OCI image from a Harbor-backed Docker registry and store it as a
@@ -62,7 +61,9 @@ HARBOR_PASS="${HARBOR_PASS:-${APPTAINER_DOCKER_PASSWORD:-}}"
 # If Docker is available, try docker login; otherwise rely on Apptainer auth env vars
 if command -v docker >/dev/null 2>&1; then
   if [ -n "${HARBOR_USER:-}" ] && [ -n "${HARBOR_PASS:-}" ]; then
-    echo "$HARBOR_PASS" | docker login containers.deltares.nl -u "$HARBOR_USER" --password-stdin
+    # echo "$HARBOR_PASS" | docker login containers.deltares.nl -u "$HARBOR_USER" --password-stdin
+    export APPTAINER_DOCKER_USERNAME="$HARBOR_USER"
+    export APPTAINER_DOCKER_PASSWORD="$HARBOR_PASS"
   fi
 else
   # Export for Apptainer/Singularity to use when pulling from an authenticated Docker registry
