@@ -16,9 +16,12 @@ spec:
         app.kubernetes.io/name: {{ include "delft3d-chart.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      {{- if and .Values.registry.username .Values.registry.password }}
       imagePullSecrets:
         - name: {{ include "delft3d-chart.fullname" . }}-dockerconfig
+      {{- end }}
       restartPolicy: Always
+      {{- if and .Values.registry.username .Values.registry.password }}
       volumes:
         - name: docker-config
           secret:
@@ -26,13 +29,16 @@ spec:
             items:
               - key: .dockerconfigjson
                 path: config.json
+      {{- end }}
       containers:
         - name: runner
           image: {{ .Values.runnerImage }}
+          {{- if and .Values.registry.username .Values.registry.password }}
           volumeMounts:
             - name: docker-config
               mountPath: /root/.docker/
               readOnly: true
+          {{- end }}
           command: ["{{ .Values.shell }}", "-eu", "-c"]
           {{- $imageBase := regexReplaceAll "(^.*/)" .Values.registry.repository "" }}
           {{- $tagSanitized := replace (replace .Values.registry.tag "/" "_" ) ":" "-" }}
