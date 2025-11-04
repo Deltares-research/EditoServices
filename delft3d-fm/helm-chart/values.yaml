@@ -1,5 +1,11 @@
 replicaCount: 1
-resources: {}
+resources:
+  limits:
+    cpu: "4"
+    memory: "8Gi"
+  requests:
+    cpu: "2"
+    memory: "4Gi"
 nodeSelector: {}
 affinity: {}
 tolerations: []
@@ -18,7 +24,7 @@ registry:
 runnerImage: ghcr.io/apptainer/apptainer:1.3.0   # container that has Apptainer inside
 # Override the shell: /bin/bash supports 'pipefail', BusyBox /bin/sh does not.
 # Change this if your runner image uses a different bash path.
-shell: /bin/sh
+shell: /bin/bash
 
 singularity:
   # Leave blank to auto‑generate <repo-base>_<tag>.sif,
