@@ -119,5 +119,3 @@ data:
 {{- .Files.Get "scripts/copy-data-edito-to-cluster.sh" | nindent 4 }}
   copy-data-cluster-to-edito.sh: |-
 {{- .Files.Get "scripts/copy-data-cluster-to-edito.sh" | nindent 4 }}
-  trigger-container.sh: |-
-{{- .Files.Get "scripts/trigger-container.sh" | nindent 4 }}
