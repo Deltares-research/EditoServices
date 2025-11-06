@@ -1,46 +1,52 @@
 import os
 from os.path import join
 from PIL import Image
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
-from IPython.display import display
+from matplotlib.animation import PillowWriter
 
-def make_movie_from_pngs(folder, fps=4, show_first_frame=True):
-    """
-    Create a movie (MP4) from PNGs in a folder and optionally display the first frame.
-    """
-    print(f"🎞️ Creating movie from PNGs in: {folder}")
+def make_movie_from_pngs(folder, fps=4, show_first_frame=False):
+    print(f"🎞️ Creating GIF from PNGs in: {folder}")
 
     png_files = sorted([
         f.path for f in os.scandir(folder)
-        if f.is_file() and f.name.endswith(".png")
+        if f.is_file() and f.name.lower().endswith(".png")
     ])
-    if len(png_files) == 0:
+    if not png_files:
         print("⚠️ No PNG files found. Skipping movie creation.")
         return
 
-    images = [Image.open(p) for p in png_files]
+    # Load frames (close PIL handles to avoid leaks)
+    frames = []
+    for p in png_files:
+        im = Image.open(p)
+        frames.append(np.asarray(im))
+        im.close()
 
-    fig, ax = plt.subplots(figsize=(8, 4), dpi=300)
+    fig, ax = plt.subplots(figsize=(8, 4), dpi=200)  # smaller dpi keeps GIF size down
     ax.set_axis_off()
-    img = ax.imshow(images[0])
+    img = ax.imshow(frames[0])
 
-    def update(frame):
-        img.set_data(images[frame])
-        return img
+    def update(i):
+        img.set_data(frames[i])
+        return (img,)
 
-    ani = animation.FuncAnimation(fig, update, frames=len(images), interval=200 // fps, blit=False)
-    out_path = join(folder, 'output_movie.mp4')
-    ani.save(out_path, writer='ffmpeg', fps=fps, dpi=300)
+    ani = animation.FuncAnimation(
+        fig, update, frames=len(frames),
+        interval=1000.0 / fps, blit=False
+    )
+
+    out_path = join(folder, "output_movie.gif")
+    ani.save(out_path, writer=PillowWriter(fps=fps), dpi=200)
     plt.close(fig)
 
-    print(f"✅ Movie saved to: {out_path}")
+    print(f"✅ GIF saved to: {out_path}")
 
     if show_first_frame:
         print("🖼️ Showing first frame...")
-        plt.figure(figsize=(8, 4))
-        plt.imshow(images[0])
+        plt.figure(figsize=(8, 4), dpi=200)
+        plt.imshow(frames[0])
         plt.axis('off')
-        plt.title("First Frame of Animation")
         plt.tight_layout()
         plt.show()

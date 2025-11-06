@@ -34,7 +34,6 @@ mamba install -y -c conda-forge \
   pyproj=3.6.0 \
   numpy=1.26.0 \
   gdal=3.6.4 \
-  ffmpeg \
   ipykernel jupyter nbformat nbconvert s3fs cartopy
 
 ### === Register kernel for Jupyter ===
