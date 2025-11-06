@@ -92,6 +92,8 @@ def plot_snapshots_every_nth(
     
     print("✅ Snapshots saved.")
 
+# Set your global, smaller figure size once
+FIGSIZE = (4, 2.5)   # width, height in inches — change as you like (e.g., (4,2.5))
 
 def plot_waterlevel_forcing(input_path, output_path):
     """
@@ -105,7 +107,7 @@ def plot_waterlevel_forcing(input_path, output_path):
     print("📊 Plotting water level forcing...")
 
     da_wl = xr.open_dataset(join(input_path, 'wl_ts.nc'))
-    fig, ax = plt.subplots(1, 1)
+    fig, ax = plt.subplots(1, 1, figsize=FIGSIZE, layout="constrained")
 
     for idx in da_wl.stations.values:
         da_wl.sel(stations=idx)['waterlevel'].plot(label=idx+1, ax=ax)
@@ -113,7 +115,7 @@ def plot_waterlevel_forcing(input_path, output_path):
     ax.set_title('')
     ax.set_ylabel('Water level [m +MSL]')
     ax.axhline(y=0, color='darkgrey', ls='--')
-    ax.legend(ncol=4)
+    ax.legend(ncol=4, fontsize=8)  # smaller legend to match reduced figure
 
     fig.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close(fig)
@@ -124,18 +126,19 @@ def plot_waterlevel_forcing(input_path, output_path):
     except:
         pass
 
+
 def plot_observed_h_difference(his_noveg, his_veg, output_path):
     """
     Plot h time series with and without vegetation + difference plot.
     """
     import matplotlib.pyplot as plt
     import numpy as np
-    import matplotlib.dates as mdates
     from IPython.display import display, Image as IPImage
 
     print("📉 Plotting time series difference...")
 
-    fig, axs = plt.subplots(2, 1)
+    # Same figure size as the other function
+    fig, axs = plt.subplots(2, 1, figsize=FIGSIZE, layout="constrained", sharex=True)
 
     ax = axs[0]
     t = his_noveg['time']
@@ -143,21 +146,20 @@ def plot_observed_h_difference(his_noveg, his_veg, output_path):
     z_veg = his_veg.values
     elapsed_hours = (t.values - t.values[0]) / np.timedelta64(1, 'h')
 
-    ax.plot(elapsed_hours, z, color='navy', label='noveg')
-    ax.plot(elapsed_hours, z_veg, color='limegreen', label='veg')
+    ax.plot(elapsed_hours, z, label='noveg')
+    ax.plot(elapsed_hours, z_veg, label='veg')
     ax.set_xticklabels([])
     ax.set_ylabel('Water depth [m]')
-    ax.legend()
+    ax.legend(fontsize=8)
 
     ax = axs[1]
     delta = z_veg - z
     ax.plot(elapsed_hours, delta)
-
     ax.set_xlabel('Hours since start')
-    ax.set_ylabel('Water depth \ndifference [m]')
+    ax.set_ylabel('Water depth\ndifference [m]')
     ax.set_ylim(-0.5, 0.5)
-    ax.text(0.55, 0.2, 'reduction due to veg', transform=ax.transAxes)
-    ax.text(0.55, 0.7, 'increase due to veg', transform=ax.transAxes)
+    ax.text(0.55, 0.2, 'reduction due to veg', transform=ax.transAxes, fontsize=8)
+    ax.text(0.55, 0.7, 'increase due to veg', transform=ax.transAxes, fontsize=8)
     ax.axhline(0, ls='--', color='black', lw=0.5)
 
     fig.savefig(output_path, dpi=300, bbox_inches='tight')

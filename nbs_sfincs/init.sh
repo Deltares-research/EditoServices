@@ -49,6 +49,7 @@ wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/n
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/movie_utils.py
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/plot_utils.py
 wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/sfincs_utils.py
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/edito_process_api.py
 
 ### === Embed kernel metadata ===
 echo "⚙️ Embedding kernel metadata into notebook..."
