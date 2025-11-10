@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "delft3d-chart.fullname" . }}
+  labels:
+    {{- include "delft3d-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "delft3d-chart.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "delft3d-chart.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      {{- if and .Values.registry.username .Values.registry.password }}
+      imagePullSecrets:
+        - name: {{ include "delft3d-chart.fullname" . }}-dockerconfig
+      {{- end }}
+      restartPolicy: Always
+      {{- if and .Values.registry.username .Values.registry.password }}
+      volumes:
+        - name: docker-config
+          secret:
+            secretName: {{ include "delft3d-chart.fullname" . }}-dockerconfig
+            items:
+              - key: .dockerconfigjson
+                path: config.json
+      {{- end }}
+      containers:
+        - name: runner
+          image: {{ .Values.runnerImage }}
+          {{- if and .Values.registry.username .Values.registry.password }}
+          volumeMounts:
+            - name: docker-config
+              mountPath: /root/.docker/
+              readOnly: true
+          {{- end }}
+          command: ["{{ .Values.shell }}", "-eu", "-c"]
+          {{- $imageBase := regexReplaceAll "(^.*/)" .Values.registry.repository "" }}
+          {{- $tagSanitized := replace (replace .Values.registry.tag "/" "_" ) ":" "-" }}
+          {{- $defaultSif := printf "%s_%s.sif" $imageBase $tagSanitized }}
+          {{- $sifFile := default $defaultSif .Values.singularity.sifFile }}
+          args:
+            - |
+              echo "Pulling SIF…";
+              apptainer pull /tmp/{{ $sifFile }} docker://{{ .Values.registry.server }}/{{ .Values.registry.repository }}:{{ .Values.registry.tag }};
+              echo "Running SIF ({{ $sifFile }})…";
+              apptainer run {{ .Values.singularity.runArgs }} /tmp/{{ $sifFile }};
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
