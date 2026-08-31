@@ -1,0 +1,10 @@
+cartopy==0.25.0
+cmocean==4.0.3
+ipython==8.12.3
+ipywidgets==8.0.0
+matplotlib==3.10.9
+numpy==2.4.6
+pandas==3.0.3
+Shapely==2.1.2
+xarray==2026.4.0
+xugrid==0.15.2

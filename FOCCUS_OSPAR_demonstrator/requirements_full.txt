@@ -1,0 +1,147 @@
+affine==2.4.0
+anyio==4.13.0
+argon2-cffi==25.1.0
+argon2-cffi-bindings==25.1.0
+arrow==1.4.0
+asttokens==3.0.1
+async-lru==2.3.0
+attrs==26.1.0
+babel==2.18.0
+backcall==0.2.0
+beautifulsoup4==4.14.3
+bleach==6.3.0
+Cartopy @ file:///D:/bld/cartopy_1756883572071/work
+certifi @ file:///home/conda/feedstock_root/build_artifacts/certifi_1776866578774/work/certifi
+cffi==2.0.0
+cftime==1.6.5
+charset-normalizer==3.4.7
+click==8.3.3
+click-plugins==1.1.1.2
+cligj==0.7.2
+cloudpickle==3.1.2
+cmocean==4.0.3
+colorama==0.4.6
+comm==0.2.3
+contextily==1.7.0
+contourpy @ file:///D:/bld/bld/rattler-build_contourpy_1769155974/work
+cycler @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_cycler_1764466758/work
+dask==2026.3.0
+debugpy==1.8.20
+decorator==5.2.1
+defusedxml==0.7.1
+docopt==0.6.2
+et_xmlfile==2.0.0
+executing==2.2.1
+fastjsonschema==2.21.2
+fonttools @ file:///D:/bld/fonttools_1776708073102/work
+fqdn==1.5.1
+fsspec==2026.4.0
+geographiclib==2.1
+geopandas==1.1.3
+geopy==2.4.1
+h11==0.16.0
+httpcore==1.0.9
+httpx==0.28.1
+idna==3.14
+importlib_metadata==9.0.0
+ipykernel==7.2.0
+ipython==8.12.3
+ipython_pygments_lexers==1.1.1
+ipywidgets==8.0.0
+isoduration==20.11.0
+jedi==0.20.0
+Jinja2==3.1.6
+joblib==1.5.3
+json5==0.14.0
+jsonpointer==3.1.1
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+jupyter-events==0.12.1
+jupyter-lsp==2.3.1
+jupyter_client==8.8.0
+jupyter_core==5.9.1
+jupyter_server==2.18.2
+jupyter_server_terminals==0.5.4
+jupyterlab==4.5.7
+jupyterlab-widgets==3.0.0
+jupyterlab_pygments==0.3.0
+jupyterlab_server==2.28.0
+kiwisolver @ file:///D:/bld/bld/rattler-build_kiwisolver_1773067062/work
+lark==1.3.1
+llvmlite==0.47.0
+locket==1.0.0
+MarkupSafe==3.0.3
+matplotlib==3.10.9
+matplotlib-inline==0.2.2
+mercantile==1.2.1
+mistune==3.2.1
+munkres==1.1.4
+nbclient==0.10.4
+nbconvert==7.17.1
+nbformat==5.10.4
+nest-asyncio==1.6.0
+netCDF4==1.7.4
+notebook_shim==0.2.4
+numba==0.65.1
+numba_celltree==0.4.2
+numpy @ file:///D:/bld/bld/rattler-build_numpy_1773839131/work/dist/numpy-2.4.3-cp311-cp311-win_amd64.whl#sha256=ab655e7b39e4f9e1dc0410b9ee943cfd1b8285ef0776679e3c6096c89e5a2bba
+openpyxl==3.1.5
+overrides==7.7.0
+packaging @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_packaging_1777103621/work
+pandas==3.0.3
+pandocfilters==1.5.1
+parso==0.8.7
+partd==1.4.2
+pickleshare==0.7.5
+pillow @ file:///D:/bld/bld/rattler-build_pillow_1775060119/work
+pipreqs==0.5.0
+platformdirs==4.9.6
+pooch==1.9.0
+prometheus_client==0.25.0
+prompt_toolkit==3.0.52
+psutil==7.2.2
+pure_eval==0.2.3
+pycparser==3.0
+Pygments==2.20.0
+pyogrio==0.12.1
+pyparsing @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_pyparsing_1769003998/work
+pyproj @ file:///D:/bld/bld/rattler-build_pyproj_1773003246/work
+pyshp @ file:///home/conda/feedstock_root/build_artifacts/pyshp_1764355200360/work
+python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_python-dateutil_1751104122/work
+python-json-logger==4.1.0
+pywinpty==3.0.3
+PyYAML==6.0.3
+pyzmq==27.1.0
+rasterio==1.4.4
+referencing==0.37.0
+requests==2.34.0
+rfc3339-validator==0.1.4
+rfc3986-validator==0.1.1
+rfc3987-syntax==1.1.0
+rpds-py==0.30.0
+scipy @ file:///C:/bld/scipy-split_1771879216239/work/dist/scipy-1.17.1-cp311-cp311-win_amd64.whl#sha256=058050e81ee500962186d6d4638e7c43e114103164f21e4456e3182aa87b600b
+Send2Trash==2.1.0
+shapely @ file:///D:/bld/shapely_1762523485568/work
+six @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_six_1753199211/work
+soupsieve==2.8.3
+stack-data==0.6.3
+terminado==0.18.1
+tinycss2==1.4.0
+toolz==1.1.0
+tornado==6.5.5
+traitlets==5.15.0
+typing_extensions==4.15.0
+tzdata==2026.2
+unicodedata2 @ file:///D:/bld/unicodedata2_1770908975304/work
+uri-template==1.3.0
+urllib3==2.7.0
+wcwidth==0.7.0
+webcolors==25.10.0
+webencodings==0.5.1
+websocket-client==1.9.0
+widgetsnbextension==4.0.15
+xarray==2026.4.0
+xugrid==0.15.2
+xyzservices==2026.3.0
+yarg==0.1.9
+zipp==3.23.1
