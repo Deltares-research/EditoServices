@@ -1,0 +1,121 @@
+# kubernetes resources
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "delft3d-chart.fullname" . }}-pull-script
+  labels:
+    {{- include "delft3d-chart.labels" . | nindent 4 }}
+data:
+  pull-image.sh: |-
+{{- .Files.Get "scripts/pull-image.sh" | nindent 4 }}
+
+{{- if and .Values.registry.username .Values.registry.password }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "delft3d-chart.fullname" . }}-registry
+  labels:
+    {{- include "delft3d-chart.labels" . | nindent 4 }}
+type: Opaque
+stringData:
+  HARBOR_USER: "{{ .Values.registry.username }}"
+  HARBOR_PASS: "{{ .Values.registry.password }}"
+{{- end }}
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "delft3d-chart.fullname" . }}-pull
+  labels:
+    {{- include "delft3d-chart.labels" . | nindent 4 }}
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      labels:
+        {{- include "delft3d-chart.labels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: pull-sif
+          image: {{ .Values.runnerImage }}
+          imagePullPolicy: IfNotPresent
+          command: [ "{{ .Values.shell | default "/bin/bash" }}", "-c" ]
+          args:
+            - |
+              set -eu
+              chmod +x /scripts/pull-image.sh
+              cd /work
+              /scripts/pull-image.sh
+          env:
+            - name: REGISTRY
+              value: "{{ .Values.registry.server }}"
+            - name: REPOSITORY
+              value: "{{ .Values.registry.repository }}"
+            - name: TAG
+              value: "{{ .Values.registry.tag }}"
+            {{- if .Values.singularity.sifFile }}
+            - name: SIF_FILE
+              value: "{{ .Values.singularity.sifFile }}"
+            {{- end }}
+            {{- if and .Values.registry.username .Values.registry.password }}
+            - name: HARBOR_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "delft3d-chart.fullname" . }}-registry
+                  key: HARBOR_USER
+            - name: HARBOR_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "delft3d-chart.fullname" . }}-registry
+                  key: HARBOR_PASS
+            {{- end }}
+          volumeMounts:
+            - name: scripts
+              mountPath: /scripts
+              readOnly: true
+            - name: work
+              mountPath: /work
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ include "delft3d-chart.fullname" . }}-pull-script
+            defaultMode: 0755
+        - name: work
+          emptyDir: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "delft3d-chart.fullname" . }}-autosubmit
+  labels:
+    {{- include "delft3d-chart.labels" . | nindent 4 }}
+data:
+  jobs.yaml: |-
+{{- .Files.Get "jobs.yaml" | nindent 4 }}
+  submit-autosubmit-job.sh: |-
+{{- .Files.Get "scripts/submit-autosubmit-job.sh" | nindent 4 }}
+  trigger-container.sh: |-
+{{- .Files.Get "scripts/trigger-container.sh" | nindent 4 }}
+  copy-data-edito-to-cluster.sh: |-
+{{- .Files.Get "scripts/copy-data-edito-to-cluster.sh" | nindent 4 }}
+  copy-data-cluster-to-edito.sh: |-
+{{- .Files.Get "scripts/copy-data-cluster-to-edito.sh" | nindent 4 }}

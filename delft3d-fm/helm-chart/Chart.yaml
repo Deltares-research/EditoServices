@@ -1,0 +1,6 @@
+apiVersion: v2
+name: delft3d-chart
+description: "Run a Singularity / Apptainer container pulled from a private, credentials-protected registry."
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

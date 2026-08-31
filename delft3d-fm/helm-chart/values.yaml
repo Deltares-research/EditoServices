@@ -1,0 +1,35 @@
+replicaCount: 1
+resources:
+  limits:
+    cpu: "4"
+    memory: "8Gi"
+  requests:
+    cpu: "2"
+    memory: "4Gi"
+nodeSelector: {}
+affinity: {}
+tolerations: []
+
+autosubmit:
+  enabled: false
+  mountPath: /autosubmit
+
+registry:
+  server: containers.deltares.nl           # OCI registry hostname (no scheme)
+  repository: delft3d/dhydro               # repo / image path
+  tag: release-2025.02                     # image tag (will be baked into SIF filename)
+  username: ""                             # supply at install time (never commit secrets!)
+  password: ""                             # supply at install time
+
+runnerImage: ghcr.io/apptainer/apptainer:1.3.0   # container that has Apptainer inside
+# Override the shell: /bin/bash supports 'pipefail', BusyBox /bin/sh does not.
+# Change this if your runner image uses a different bash path.
+shell: /bin/bash
+
+singularity:
+  # Leave blank to auto‑generate <repo-base>_<tag>.sif,
+  # e.g. dhydro_release-2025.02.sif
+  sifFile: ""
+  runArgs: ""                             # any extra args to `apptainer run`
+
+
