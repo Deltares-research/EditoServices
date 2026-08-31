@@ -1,5 +1,13 @@
 #!/bin/bash
-set -e  # Exit on any error
+set -euxo pipefail
+
+trap 'echo "ERROR: init.sh failed at line $LINENO"' ERR
+
+cd /home/onyxia/work
+
+echo "USER=$(whoami)"
+echo "HOME=$HOME"
+echo "PWD=$(pwd)"
 
 ### === Install Miniforge (user-local) ===
 MINIFORGE=Miniforge3-Linux-x86_64.sh
@@ -26,7 +34,7 @@ echo "📦 Installing required packages..."
 mamba install -y -c conda-forge \
   cartopy==0.25.0 \
   cmocean==4.0.3 \
-  ipython==8.12.3 \
+  ipython \
   ipywidgets==8.0.0 \
   matplotlib==3.10.9 \
   numpy==2.4.6 \
