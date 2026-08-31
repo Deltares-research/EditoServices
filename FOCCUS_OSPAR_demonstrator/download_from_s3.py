@@ -19,7 +19,8 @@ def download_nc_files_from_s3(
     """
     # Onyxia S3 credentials and bucket setup
     onyxia_user_name = os.environ["GIT_USER_NAME"]
-    bucket_name = f"oidc-{onyxia_user_name}"
+    #bucket_name = f"oidc-{onyxia_user_name}"
+    bucket_name = f"project-foccus"
     S3_ENDPOINT_URL = os.environ["S3_ENDPOINT"]
     fs = s3fs.S3FileSystem(client_kwargs={'endpoint_url': S3_ENDPOINT_URL})
 

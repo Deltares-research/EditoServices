@@ -42,6 +42,7 @@ mamba install -y -c conda-forge \
   Shapely==2.1.2 \
   xarray==2026.4.0 \
   xugrid==0.15.2 \
+  openpyxl \
   ipykernel jupyter nbformat nbconvert s3fs
 
 ### === Register kernel for Jupyter ===
