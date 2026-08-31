@@ -14,9 +14,9 @@ rm $MINIFORGE
 source $INSTALL_DIR/etc/profile.d/conda.sh
 
 ### === Create and activate environment ===
-echo "🧪 Creating conda environment 'sfincs_vegetation'..."
-conda create -y -n sfincs_vegetation python=3.10.13
-conda activate sfincs_vegetation
+echo "🧪 Creating conda environment 'foccus_ospar'..."
+conda create -y -n foccus_ospar python=3.12.2
+conda activate foccus_ospar
 
 # Install mamba
 conda install -y -c conda-forge mamba
@@ -24,32 +24,26 @@ conda install -y -c conda-forge mamba
 ### === Install exact packages ===
 echo "📦 Installing required packages..."
 mamba install -y -c conda-forge \
-  hydromt_sfincs=1.0.2 \
-  hydromt=0.8.0 \
-  rasterio=1.3.7 \
-  geopandas=0.14.1 \
-  pandas=2.1.3 \
-  xarray=2023.11.0 \
-  proj=9.2.0 \
-  pyproj=3.6.0 \
-  numpy=1.26.0 \
-  gdal=3.6.4 \
-  ipykernel jupyter nbformat nbconvert s3fs cartopy
+  cartopy==0.25.0 \
+  cmocean==4.0.3 \
+  ipython==8.12.3 \
+  ipywidgets==8.0.0 \
+  matplotlib==3.10.9 \
+  numpy==2.4.6 \
+  pandas==3.0.3 \
+  Shapely==2.1.2 \
+  xarray==2026.4.0 \
+  xugrid==0.15.2 \
+  ipykernel jupyter nbformat nbconvert s3fs
 
 ### === Register kernel for Jupyter ===
 echo "🔗 Registering Jupyter kernel..."
-python -m ipykernel install --user --name sfincs_vegetation --display-name "Python (sfincs_vegetation)"
+python -m ipykernel install --user --name foccus_ospar --display-name "Python (foccus_ospar)"
 
 ### === Download notebook and helper script ===
 echo "📥 Downloading notebook and script..."
-wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/main.ipynb
-wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/upload_model.py
-wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/download_from_s3.py
-wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/launch_sfincs_process.py
-wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/movie_utils.py
-wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/plot_utils.py
-wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/sfincs_utils.py
-wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/nbs_sfincs/edito_process_api.py
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/FOCCUS_OSPAR_demonstrator/main.ipynb
+wget -N https://raw.githubusercontent.com/Deltares-research/EditoServices/main/FOCCUS_OSPAR_demonstrator/download_from_s3.py
 
 ### === Embed kernel metadata ===
 echo "⚙️ Embedding kernel metadata into notebook..."
@@ -60,8 +54,8 @@ nb_path = "main.ipynb"
 nb = nbformat.read(open(nb_path), as_version=nbformat.NO_CONVERT)
 
 nb["metadata"]["kernelspec"] = {
-    "name": "sfincs_vegetation",
-    "display_name": "Python (sfincs_vegetation)",
+    "name": "foccus_ospar",
+    "display_name": "Python (foccus_ospar)",
     "language": "python"
 }
 
@@ -72,25 +66,47 @@ EOF
 echo "🧼 Clearing cell outputs..."
 jupyter nbconvert --clear-output --inplace main.ipynb
 
-echo "✅ Setup complete. You can now open main.ipynb and it will use the 'sfincs_vegetation' kernel by default."
+echo "✅ Setup complete. You can now open main.ipynb and it will use the 'foccus_ospar' kernel by default."
 
 ### === Download input ===
 # Make folder
-mkdir -p input_dir
-cd input_dir
+mkdir -p data
+cd data
 
 # Base path to raw files on GitHub
-BASE_URL="https://github.com/Deltares-research/EditoServices/raw/main/nbs_sfincs/input_dir"
+BASE_URL="https://github.com/Deltares-research/EditoServices/raw/main/FOCCUS_OSPAR_demonstrator/data"
 
 # List of files to download
 FILES=(
-  da_veg.tif
-  delta_dtm_gebco_ref_msl.tif
-  domain.gpkg
-  domain_lines.gpkg
-  edito_sfincs_data.yml
-  wl_ts.nc
-  gswo.tif
+  COMP4_assessment_areas_v8a.cpg
+  COMP4_assessment_areas_v8a.dbf
+  COMP4_assessment_areas_v8a.sbn
+  COMP4_assessment_areas_v8a.sbx
+  COMP4_assessment_areas_v8a.shp
+  COMP4_assessment_areas_v8a.shx
+  OSPAR_metrics_EQR_2015_2020.nc
+  River_perTarea_Feb.xlsx
+)
+
+# Download each file
+for file in "${FILES[@]}"; do
+  echo "Downloading $file..."
+  wget -nc "$BASE_URL/$file"
+done
+
+cd ..
+
+# Make folder
+mkdir -p imgs
+cd imgs
+
+# Base path to raw files on GitHub
+BASE_URL="https://github.com/Deltares-research/EditoServices/raw/main/FOCCUS_OSPAR_demonstrator/imgs"
+
+# List of files to download
+FILES=(
+  DF111.pdf
+  FOCCUS_LOGO.jpg
 )
 
 # Download each file
