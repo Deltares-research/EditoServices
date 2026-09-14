@@ -120,7 +120,7 @@ FILES=(
   FOCCUS_LOGO.jpg
   ScenarioSetup.png
   suitability_maps.png
-  Multi-use_NorthSea_windparks_vision_Hendrik_Gheerardyn_(2022).png
+  "Multi-use_NorthSea_windparks_vision_Hendrik_Gheerardyn_(2022).png"
 )
 
 # Download each file
